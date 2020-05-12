@@ -21,7 +21,7 @@ Todo list created with Node js and React
 
 -[] make todo items  
   -[] check / uncheck items off  
-  -[] remove checked items  
+   -[] remove checked items  
 
 -[] make todo lists  
   -[] remove todo lists
