@@ -1,5 +1,5 @@
 const express = require('express');
 
 exports.getAllUsers = (req,res) =>{
-  console.log("getting all users")
+  console.log("getting all users method")
 }
