@@ -6,6 +6,8 @@ Todo list created with Node js and React
 ``` GET /users ``` returns an array of all users.  
 ``` POST /auth/signup ``` signs up/creates a new user  
 ``` POST /auth/signin ``` signs in a user
+``` GET /auth/signout ``` signs the user out
+``` DELETE /users/:username ``` deletes the suer with the given :username
 
 
 
@@ -18,7 +20,7 @@ Todo list created with Node js and React
 
 - [x] sign out  
 
-- [ ] delete account
+- [x] delete account
 
 - [ ] make todo lists  
   - [ ] remove todo lists
