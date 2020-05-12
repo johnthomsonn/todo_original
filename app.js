@@ -29,7 +29,7 @@ mongoose.connection.on('error', err => {
 
 //get urls and route
 app.get("/", (req,res) => res.send("Home Page"));
-app.use("/users",  authroute );
+app.use("/auth",  authroute );
 app.use("/users",  userroute );
 
 
