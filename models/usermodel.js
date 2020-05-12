@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const {uuid} = require('uuidv4');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const saltRounds = 12;
 
 const userSchema = new mongoose.Schema({
   username :{

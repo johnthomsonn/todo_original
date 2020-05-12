@@ -5,12 +5,15 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose')
 const morgan = require("morgan");
+const expressValidator = require('express-validator');
 
 const authroute = require('./routes/authroute');
 
 app.use(morgan("dev"));
+app.use(express.json())
 app.use(bodyParser.json());
-app.use(cors())
+app.use(expressValidator());
+app.use(cors());
 
 mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
