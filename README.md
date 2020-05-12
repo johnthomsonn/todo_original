@@ -3,11 +3,11 @@ Todo list created with Node js and React
 
 ## API endpoints
 
-``` GET /users ``` returns an array of all users.  
-``` POST /auth/signup ``` signs up/creates a new user  
-``` POST /auth/signin ``` signs in a user  
-``` GET /auth/signout ``` signs the user out  
-``` DELETE /users/:username ``` deletes the suer with the given :username  
+``` GET /users ``` returns an array of all users.    
+``` POST /auth/signup ``` signs up/creates a new user and returns auth token/cookie and user  
+``` POST /auth/signin ``` signs in a user and returns auth token/cookie and user    
+``` GET /auth/signout ``` signs the user out    
+``` DELETE /users/:username ``` deletes the user with the given :username  and returns a message and deleted user    
 
 
 
