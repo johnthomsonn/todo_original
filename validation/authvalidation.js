@@ -19,11 +19,21 @@ exports.signupValidation = (req,res,next) => {
 
   const errors = req.validationErrors();
   const errormsgs = [];
+  /*
   if (errors) {
     const firstErr = errors.map((error) => error.msg)[0];
     return res.status(400).json({
       error: firstErr
     });
+  }
+  */
+
+  if(errors)
+  {
+    errors.map(error => errormsgs.push(error.msg))
+    return res.status(400).json({
+      error: errormsgs
+    })
   }
 
 //proceed to next middleware
