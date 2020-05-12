@@ -8,6 +8,7 @@ const morgan = require("morgan");
 const expressValidator = require('express-validator');
 
 const authroute = require('./routes/authroute');
+const userroute = require('./routes/userroute');
 
 app.use(morgan("dev"));
 app.use(express.json())
@@ -29,6 +30,7 @@ mongoose.connection.on('error', err => {
 //get urls and route
 app.get("/", (req,res) => res.send("Home Page"));
 app.use("/users",  authroute );
+app.use("/users",  userroute );
 
 
 
