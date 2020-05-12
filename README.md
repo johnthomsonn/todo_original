@@ -12,16 +12,16 @@ Todo list created with Node js and React
 - [x] sign up/create user  
   - [x] validation on signup
 
-- [] log in  
-  - [] log in validation
+- [ ] log in  
+  - [ ] log in validation
 
-- [] log out
+- [ ] log out
 
-- [] delete account
+- [ ] delete account
 
-- [] make todo items  
-  - [] check / uncheck items off  
-   - [] remove checked items  
+- [ ] make todo items  
+  - [ ] check / uncheck items off  
+   - [ ] remove checked items  
 
-- [] make todo lists  
-  - [] remove todo lists
+- [ ] make todo lists  
+  - [ ] remove todo lists
