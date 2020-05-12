@@ -13,8 +13,8 @@ Todo list created with Node js and React
 - [x] sign up/create user  
   - [x] validation on signup
 
-- [ ] log in  
-  - [ ] log in validation
+- [x] log in  
+  - [x] log in validation
 
 - [ ] log out
 
