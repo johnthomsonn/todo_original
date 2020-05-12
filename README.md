@@ -4,7 +4,8 @@ Todo list created with Node js and React
 ## API endpoints
 
 ``` GET /users ``` returns an array of all users.  
-``` POST /users ``` creates a new user
+``` POST /auth/signup ``` signs up/creates a new user
+``` POST /auth/signin ``` signs in a user
 
 
 
@@ -21,9 +22,7 @@ Todo list created with Node js and React
 
 - [ ] make todo lists  
   - [ ] remove todo lists
-  
+
 - [ ] make todo items  
   - [ ] check / uncheck items off  
    - [ ] remove checked items  
-
-
