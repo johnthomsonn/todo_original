@@ -4,9 +4,20 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const port = process.env.PORT;
 const app = express();
+const mongoose = require('mongoose')
 
 app.use(bodyParser.json());
 app.use(cors())
+
+mongoose.connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology : true
+  })
+  .then(() => console.log("Connected to Database"));
+
+mongoose.connection.on('error', err => {
+  console.log("Database error: " + err.message);
+});
 
 
 //get urls and route
