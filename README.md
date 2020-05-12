@@ -19,9 +19,11 @@ Todo list created with Node js and React
 
 - [ ] delete account
 
+- [ ] make todo lists  
+  - [ ] remove todo lists
+  
 - [ ] make todo items  
   - [ ] check / uncheck items off  
    - [ ] remove checked items  
 
-- [ ] make todo lists  
-  - [ ] remove todo lists
+
