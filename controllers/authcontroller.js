@@ -104,7 +104,3 @@ exports.signout =(req,res) =>{
     message : "User signed out"
   });
 }
-
-exports.deleteUser = async (req,res) => {
-
-}
