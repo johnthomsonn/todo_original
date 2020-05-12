@@ -40,3 +40,7 @@ exports.signupValidation = (req,res,next) => {
   next();
 
 }
+
+exports.signinValidation = (req,res,next) =>{
+  
+}

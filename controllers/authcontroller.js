@@ -12,12 +12,12 @@ exports.signup = async (req, res) => {
     username: req.body.username
   });
   if (userExistsEmail) {
-    return res.status(403).json({
+    return res.status(409).json({
       error: "Email is already in use"
     });
   }
   if (userExistsUsername) {
-    return res.status(403).json({
+    return res.status(409).json({
       error: "username is already in use"
     });
   }
@@ -44,7 +44,7 @@ exports.signup = async (req, res) => {
     res.cookie("token", token, {expire: new Date() + 7257600});
 
     const {_id, username, email, created} = createdUser;
-    return res.json({
+    return res.status(201).json({
       token,
       user: {
         _id,
@@ -57,5 +57,43 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req,res) => {
-  res.send("/signins");
+  let foundUser = await User.findOne({email : req.body.email});
+  if(!foundUser)
+  {
+    return res.status(404).json({
+      error : "User not found with given credentials"
+    });
+  }
+  else
+  {
+    //user is found so hash and compare passwords
+    const passwordsMatch = await foundUser.comparePasswords(req.body.password)
+    if(!passwordsMatch)
+    {
+      return res.status(401).json({
+        error : "User not found with given credentials"
+      });
+    }
+    else
+    {
+      //user has entered correct email/password so send token
+      const token = jwt.sign(
+        {
+          _id: foundUser._id
+        },
+        process.env.JWT_SECRET
+      );
+      res.cookie("token", token, {expire: new Date() + 7257600});
+      const {_id, username, email, created} = foundUser;
+      return res.status(200).json({
+        token,
+        user: {
+          _id,
+          username,
+          email,
+          created
+        }
+      });
+    }
+  }
 };
