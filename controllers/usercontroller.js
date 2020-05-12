@@ -1,7 +1,6 @@
 const express = require('express');
 const User = require('../models/usermodel')
 
-
 exports.getAllUsers = async (req,res) => {
   const allUsers = await User.find({}).select("username email");
   if(!allUsers)
