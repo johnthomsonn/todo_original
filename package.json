@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/johnthomsonn/todo.git#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
     "cookie-parser": "^1.4.5",
@@ -29,8 +30,9 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.9.13",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.3",
     "router": "^1.3.5",
-    "uuid": "^8.0.0"
+    "uuidv4": "^6.0.8"
   }
 }

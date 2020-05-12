@@ -3,46 +3,98 @@ const User = require("../models/usermodel");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 
-exports.signup = (req, res) => {
-  const submittedEmail = req.body.email;
-  User.findOne({email: submittedEmail}).exec((err, user) => {
-    if (err) console.log(err);
+exports.signupp = async (req, res) => {
+  const userExists = await User.findOne({
+    email: req.body.email
+  });
+  if (userExists) {
+    return res.status(403).json({
+      error: "Email is already in use"
+    });
+  }
+
+  //email is unique and so we can create our user
+  try {
+    let user = await new User(req.body);
+    const createdUser = await user.save();
+    //if save was unsuccessfull
+    if (!createdUser) {
+      return json.status(500).json({
+        error: "Error when saving the new user"
+      });
+    }
+    //else create jwt tokens and cookies
     else {
-      //if user then email is already created
-      if (user) {
-        return res.status(403).json({
-          error: "Email is already in use"
+      const token = jwt.sign(
+        {
+          _id: createdUser._id
+        },
+        process.env.JWT_SECRET
+      );
+      res.cookie("token", token, {expire: new Date() + 7257600});
+
+      const {_id, username, email, created} = createdUser;
+      return res.json({
+        token,
+        user: {
+          _id,
+          username,
+          email,
+          created
+        }
+      });
+    } // ends succesfful creation of new user
+  } catch (err) {
+    console.log("error when creating new user using .save: " + err);
+  }
+};
+
+exports.signup = async (req, res) => {
+  const userExists = await User.findOne({
+    email: req.body.email
+  });
+  if (userExists) {
+    return res.status(403).json({
+      error: "Email is already in use"
+    });
+  }
+
+  //email is unique and so we can create our user
+
+    let user = await new User(req.body);
+    await user.save()
+    .then(createdUser => {
+
+      //if save was unsuccessfull
+      if (!createdUser) {
+        return json.status(500).json({
+          error: "Error when saving the new user"
         });
       }
-      //else no user = no email in use so create user
+      //else create jwt tokens and cookies
       else {
-        const user = new User(req.body);
-        user.save((err, createdUser) => {
-          if (err) console.log(err);
-          else {
-            //user created successfully so now send jwt and redirect to user home
-            //create jwt token
-            const token = jwt.sign(
-              {_id: createdUser._id},
-              process.env.JWT_SECRET
-            );
-            //set token in cookie
-            res.cookie("authCookie", token, {
-              expire: new Date() + 7257600
-            });
-            //return token and user to client
-            res.json({
-              token,
-              user :{
-                _id,
-                email : createdUser.email,
-                username : createdUser.username,
-                created : createdUser.created
-              }
-            });
+        const token = jwt.sign(
+          {
+            _id: createdUser._id
+          },
+          process.env.JWT_SECRET
+        );
+        res.cookie("token", token, {expire: new Date() + 7257600});
+
+        const {_id, username, email, created} = createdUser;
+        return res.json({
+          token,
+          user: {
+            _id,
+            username,
+            email,
+            created
           }
-        }); // ends user.save
-      } // ends else no user, create...
-    }
-  }); // ends user.findOne.exec
+        });
+      } // ends succesfful creation of new user
+
+    } )
+    .catch(err => console.log("error on save: " + err))
+
+
 };

@@ -1,4 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const {uuid} = require('uuidv4');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const userSchema = new mongoose.Schema({
   username :{
@@ -13,9 +17,8 @@ const userSchema = new mongoose.Schema({
   },
   hashed_password :{
     type : String,
-    required :true
+    required : true
   },
-  salt : String,
   created : {
     type : Date,
     default : Date.now
@@ -28,32 +31,30 @@ const userSchema = new mongoose.Schema({
 //when we pass password field on creating a new user, this setter will run
 //and set the salt and hashed_password. means keeping password stuff here and not in other files
 userSchema.virtual('password')
-.set(function(password) {
+  .set(function(password) {
+
     this._password = password;
-    //generate a timestamp
-    this.salt = uuidv4();
     //encrypt _password
     this.hashed_password = this.encryptPassword(password);
+
   })
   .get(function() {
     return this._password;
   });
 
 userSchema.methods = {
-authenticateUser : function(plaintext) {
-  return this.encryptPassword(plaintext) == this.hashed_password;
-},
+  authenticate: function(plaintext){
+    return this.encryptPassword(plaintext) === this.hashed_password;
+  },
 
-encryptPassword: function(password) {
-    if (!password) return "";
-    try {
-      return crypto.createHmac('sha512', this.salt)
-        .update(password)
-        .digest('hex');
-    } catch (err) {
-      return "";
-    }
+  encryptPassword: function(password) {
+    return bcrypt.hashSync(password, saltRounds);
+  },
+
+  comparePasswords : async function(pwdToCompare) {
+    return await bcrypt.compare(pwdToCompare, this.hashed_password);
   }
 }
+
 
 module.exports = mongoose.model("User", userSchema);
