@@ -9,10 +9,10 @@ Todo list created with Node js and React
 
 
 ### Backend todo list
--[x] sign up/create user  
-  -[x] validation on signup
+- [x] sign up/create user  
+  - [x] validation on signup
 
--[] log in  
+- [] log in  
   -[] log in validation
 
 -[] log out
