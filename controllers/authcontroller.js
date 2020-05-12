@@ -11,14 +11,9 @@ exports.signup = async (req, res) => {
   const userExistsUsername = await User.findOne({
     username: req.body.username
   });
-  if (userExistsEmail) {
+  if (userExistsEmail || userExistsUsername) {
     return res.status(409).json({
       error: "Email is already in use"
-    });
-  }
-  if (userExistsUsername) {
-    return res.status(409).json({
-      error: "username is already in use"
     });
   }
 
@@ -58,7 +53,7 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req,res) => {
   let foundUser = await User.findOne({email : req.body.email});
-  if(!foundUser)
+  if(!foundUser )
   {
     return res.status(404).json({
       error : "User not found with given credentials"
