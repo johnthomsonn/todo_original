@@ -5,16 +5,24 @@ const expressJwt = require("express-jwt");
 
 
 exports.signup = async (req, res) => {
-  const userExists = await User.findOne({
+  const userExistsEmail = await User.findOne({
     email: req.body.email
   });
-  if (userExists) {
+  const userExistsUsername = await User.findOne({
+    username: req.body.username
+  });
+  if (userExistsEmail) {
     return res.status(403).json({
       error: "Email is already in use"
     });
   }
+  if (userExistsUsername) {
+    return res.status(403).json({
+      error: "username is already in use"
+    });
+  }
 
-  //email is unique and so we can create our user
+  //email and username is unique and so we can create our user
 
   let user = await new User(req.body);
   const createdUser = await user.save();
@@ -46,4 +54,8 @@ exports.signup = async (req, res) => {
       }
     });
   } // ends succesfful creation of new user
+};
+
+exports.signin = async (req,res) => {
+  res.send("/signins");
 };
