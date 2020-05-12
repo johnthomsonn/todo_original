@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {signup, signin,signout} = require('../controllers/authcontroller')
+const {signup, signin,signout, deleteUser} = require('../controllers/authcontroller')
 const {signupValidation, signinValidation} = require('../validation/authvalidation')
 
 router.post("/signup", signupValidation ,signup);
 router.post("/signin", signinValidation, signin);
-router.get("/signout", signout)
+router.get("/signout", signout); //need to require signin
+router.delete("/users/:username", deleteUser) //require sign in
 
 module.exports = router;
