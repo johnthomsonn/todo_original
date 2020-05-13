@@ -25,3 +25,4 @@ itemSchema.methods = {
 }
 
 module.exports = mongoose.model('Item', itemSchema)
+module.exports = itemSchema;
