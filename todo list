@@ -1,9 +1,11 @@
+ROUGH WORK.
 
 
 
-
-
-
+/users/:username/lists => gets all lists
+/users/:username/lists/:list => gets list with items
+/users/:username/lists/:list/items => adds item to list
+/users/:username/lists/:list/items/:itemId => deletes specific item
 
 
 
