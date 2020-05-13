@@ -19,20 +19,14 @@ exports.createList = async (req, res) => {
   const usersLists = req.user.lists;
 
 
-  let proms = [];
   let found = false;
-
-  usersLists.map(listId => {
-    proms.push(List.findOne({_id: listId}, "name").exec());
-  });
-
-await Promise.all(proms.map(p => {
-  if(p.name == req.body.name)
-    found = true;
-}))
-  console.log("********************************* IS FOUND: " + found);
-  console.log("********************************* PROMISES: " + proms);
-
+  
+const promises = usersLists.map(async listId => {
+    const prom = await List.findOne({_id: listId}, "name").exec();
+    if(prom.name == req.body.name)
+        found = true;
+});
+await Promise.all(promises);
 
   //console.log(found);
   if (found) {
@@ -48,6 +42,7 @@ await Promise.all(proms.map(p => {
       {new: true}
     ).populate("lists", "name items");
     if (user) {
+      user.hashed_password = undefined;
       return res.json({
         message: "List created successfully",
         user: user
