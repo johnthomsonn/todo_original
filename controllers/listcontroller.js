@@ -1,24 +1,21 @@
 const express = require("express");
 const List = require("../models/listmodel");
 const User = require("../models/usermodel");
-const _ = require('lodash')
+const _ = require("lodash");
 
 //middleware to attach list to req
-exports.getListByListName = (req,res, next,listName) => {
-  List.findOne({name : listName}, (err, list) =>{
-    if(err || list.length == 0)
-    {
+exports.getListByListName = (req, res, next, listName) => {
+  List.findOne({name: listName}, (err, list) => {
+    if (err || !list) {
       res.status(400).json({
         error: "List not found by list name parameter"
       });
-    }
-    else
-    {
+    } else {
       req.list = list;
     }
     next();
-  })
-}
+  });
+};
 
 exports.getLists = (req, res) => {
   List.find({}, (err, lists) => {
@@ -35,11 +32,17 @@ exports.getLists = (req, res) => {
 
 exports.createList = async (req, res) => {
   const usersLists = req.user.lists;
-  req.body.name = _.lowerCase(req.body.name)
-const promises = usersLists.map(listId => List.findOne({_id: listId}, "name"))
-const found = await Promise.all(promises).then(listArray =>{
-  return listArray.find(list => list.name === req.body.name)
-})
+  req.body.name = _.lowerCase(req.body.name);
+
+  const promises = usersLists.map(listId =>
+    List.findOne({_id: listId}, "name")
+  );
+  const found = await Promise.all(promises).then(listArray => {
+    return listArray.find(list => list.name === req.body.name);
+    // listArray.map(list => {
+    //   console.log(list);
+    // })
+  });
 
   //console.log(found);
   if (found) {
@@ -47,7 +50,6 @@ const found = await Promise.all(promises).then(listArray =>{
       error: "You already have a list of that name"
     });
   } else {
-
     const list = await new List(req.body);
     await list.save();
     const user = await User.findOneAndUpdate(
@@ -69,7 +71,10 @@ const found = await Promise.all(promises).then(listArray =>{
   }
 };
 
-exports.getList = (req,res) =>
-{
+exports.getList = (req, res) => {
   return res.json(req.list);
-}
+};
+
+exports.deleteList = (req, res) => {
+  console.log("deleting");
+};
