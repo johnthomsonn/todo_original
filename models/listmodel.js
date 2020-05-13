@@ -1,15 +1,14 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const {ObjectId} = mongoose.Schema;
-const {itemSchema} = require('./usermodel')
 
 const listSchema = new mongoose.Schema({
-  name : {
-    type :String,
+  name: {
+    type: String,
     trim: true,
-    required : true
+    required: true
   },
-  items : [itemSchema]
-})
+  items: [{type: ObjectId, ref: "Item"}]
+});
 
 module.exports = mongoose.model("List", listSchema);
