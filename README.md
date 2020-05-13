@@ -11,7 +11,8 @@ of methods. Some using async/await and others using callback functions.
 ``` DELETE /users/:username ``` deletes the user with the given :username  and returns a message and deleted user      
 ``` GET /users/:username/lists ``` returns an array of all lists associated with the given :username  
 ``` POST /users/:username/lists ``` attemps to create a new list to associate with the given :username    
-``` GET /users/:username/lists/:listName ``` returns the specific list given by :listName
+``` GET /users/:username/lists/:listName ``` returns the specific list given by :listName  
+``` DELETE /users/:username/lists/:listName ``` deletes the given :listName and returns the deleted list  
 
 ### Backend todo list
 - [x] sign up/create user  
@@ -26,7 +27,7 @@ of methods. Some using async/await and others using callback functions.
 
 - [x] make todo lists  
   - [x] view specific list  
-  - [ ] remove todo lists
+  - [x] remove todo lists
 
 - [ ] make todo items  
   - [ ] check / uncheck items off  

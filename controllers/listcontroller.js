@@ -38,7 +38,14 @@ exports.createList = async (req, res) => {
     List.findOne({_id: listId}, "name")
   );
   const found = await Promise.all(promises).then(listArray => {
-    return listArray.find(list => list.name === req.body.name);
+    console.log(listArray)
+    return listArray.find(list => {
+      if(list != null)
+      {
+        if(list.name === req.body.name)
+        return true;
+      }
+    });
     // listArray.map(list => {
     //   console.log(list);
     // })
@@ -76,5 +83,19 @@ exports.getList = (req, res) => {
 };
 
 exports.deleteList = (req, res) => {
-  console.log("deleting");
+  const listToDelete = req.list;
+  listToDelete.remove(err => {
+    if(err)
+    {
+      return res.status(400).json({
+        error : "Could not remove the list " + err
+      });
+    }
+    else
+    {
+      return res.json({
+        message : `List ${listToDelete.name} has been deleted`
+      });
+    }
+  })
 };
