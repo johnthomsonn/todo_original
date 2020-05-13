@@ -1,7 +1,19 @@
 const express = require('express');
+const List = require("../models/listmodel");
 
 exports.getLists = (req,res) => {
-  res.send("getting all lists for user: " + req.user.username)
+  List.find({}, (err, lists) => {
+    if(err){
+      console.log("error finding all lists");
+      return res.status(404).json({
+        error : "Unable to fetch all lists"
+      });
+    }
+    else
+    {
+      return res.json({lists});
+    }
+  })
 }
 
 exports.createList = (req,res) => {
