@@ -1,6 +1,7 @@
 const express = require("express");
 const List = require("../models/listmodel");
 const User = require("../models/usermodel");
+const _ = require('lodash')
 
 exports.getLists = (req, res) => {
   List.find({}, (err, lists) => {
@@ -17,16 +18,11 @@ exports.getLists = (req, res) => {
 
 exports.createList = async (req, res) => {
   const usersLists = req.user.lists;
-
-
-  let found = false;
-  
-const promises = usersLists.map(async listId => {
-    const prom = await List.findOne({_id: listId}, "name").exec();
-    if(prom.name == req.body.name)
-        found = true;
-});
-await Promise.all(promises);
+  req.body.name = _.lowerCase(req.body.name)
+const promises = usersLists.map(listId => List.findOne({_id: listId}, "name"))
+const found = await Promise.all(promises).then(listArray =>{
+  return listArray.find(list => list.name === req.body.name)
+})
 
   //console.log(found);
   if (found) {
@@ -34,6 +30,7 @@ await Promise.all(promises);
       error: "You already have a list of that name"
     });
   } else {
+
     const list = await new List(req.body);
     await list.save();
     const user = await User.findOneAndUpdate(
