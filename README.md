@@ -22,7 +22,7 @@ Todo list created with Node js and React
 
 - [x] delete account
 
-- [ ] make todo lists  
+- [x] make todo lists  
   - [ ] remove todo lists
 
 - [ ] make todo items  
