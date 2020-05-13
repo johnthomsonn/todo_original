@@ -3,6 +3,23 @@ const List = require("../models/listmodel");
 const User = require("../models/usermodel");
 const _ = require('lodash')
 
+//middleware to attach list to req
+exports.getListByListName = (req,res, next,listName) => {
+  List.findOne({name : listName}, (err, list) =>{
+    if(err || list.length == 0)
+    {
+      res.status(400).json({
+        error: "List not found by list name parameter"
+      });
+    }
+    else
+    {
+      req.list = list;
+    }
+    next();
+  })
+}
+
 exports.getLists = (req, res) => {
   List.find({}, (err, lists) => {
     if (err) {
@@ -51,3 +68,8 @@ const found = await Promise.all(promises).then(listArray =>{
     }
   }
 };
+
+exports.getList = (req,res) =>
+{
+  return res.json(req.list);
+}
