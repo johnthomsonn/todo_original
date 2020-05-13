@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const {uuid} = require('uuidv4');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
+const {ObjectId} = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
   username :{
@@ -25,7 +26,11 @@ const userSchema = new mongoose.Schema({
   },
   updated : {
     type: Date
-  }
+  },
+  lists : [{
+    type : ObjectId,
+    ref : "List"
+  }]
 });
 
 //when we pass password field on creating a new user, this setter will run
