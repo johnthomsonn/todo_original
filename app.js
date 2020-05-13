@@ -6,7 +6,7 @@ const app = express();
 const mongoose = require('mongoose')
 const morgan = require("morgan");
 const expressValidator = require('express-validator');
-const chalk = require('chalk')
+const {debug, error} = require('./utils/debug')
 
 //Routes
 const authroute = require('./routes/authroute');
@@ -30,10 +30,10 @@ mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology : true
   })
-  .then(() => console.log(chalk.blue("Connected to Database")));
+  .then(() => debug("Connected to Database"));
 
 mongoose.connection.on('error', err => {
-  console.log("Database error: " + err.message);
+  error("Database error: " + err.message);
 });
 
 
@@ -58,4 +58,4 @@ app.param("listname", getListByListName)
 
 const port = process.env.PORT;
 //start the backend server
-app.listen(port, () => console.log(chalk.blue(`Express server started on port ${port}`)));
+app.listen(port, () => debug(`Express server started on port ${port}`));

@@ -18,6 +18,7 @@ of methods. Some using async/await and others using callback functions.
 ``` DELETE /users/:username/lists/:listname ``` => deletes the given :listName and returns the deleted list
 
 ``` GET /users/:username/lists/:listname/items ``` => returns all the items in the given list :listname (excluding name and _id)  
+``` POST /users/:username/lists/:listname/items ``` => creates a new item and adds it to :listname then returns the items in :listname
 
 ### Backend todo list
 - [x] sign up/create user  
