@@ -11,9 +11,11 @@ const expressValidator = require('express-validator');
 const authroute = require('./routes/authroute');
 const userroute = require('./routes/userroute');
 const listroute = require('./routes/listroute');
+const itemroute = require('./routes/itemroute');
 
 // Includes to help with Routes
 const {getUserByUsernameParam} = require('./controllers/usercontroller')
+const {getListByListName} = require('./controllers/listcontroller')
 
 //Middleware
 app.use(morgan("dev"));
@@ -39,8 +41,10 @@ app.get("/", (req,res) => res.send("Home Page"));
 app.use("/auth",  authroute );
 app.use("/users",  userroute );
 app.use("/users/:username/lists", listroute);
+app.use("/users/:username/lists/:listname/items", itemroute)
 //route parameters
 app.param("username", getUserByUsernameParam)
+app.param("listname", getListByListName)
 
 
 

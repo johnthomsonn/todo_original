@@ -8,6 +8,7 @@ router.get("/", getLists);
 router.post("/", listCreationValidation,createList)
 router.get("/:listName", getList)
 router.delete("/:listName" , deleteList)
+
 router.param("listName", getListByListName)
 
 module.exports = router;
