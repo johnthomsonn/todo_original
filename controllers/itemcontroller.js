@@ -23,9 +23,9 @@ exports.getItemsInList = (req, res) => {
 exports.addItemToList = async (req, res) => {
   const list = req.list;
   const user = req.user;
-
+  const content = req.body;
   try {
-    const newItem = await new Item(req.body);
+    const newItem = await new Item(content);
     await newItem.save();
 
     list.items.push(newItem);

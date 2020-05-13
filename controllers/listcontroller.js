@@ -39,7 +39,6 @@ exports.createList = async (req, res) => {
     List.findOne({_id: listId}, "name")
   );
   const found = await Promise.all(promises).then(listArray => {
-    console.log(listArray)
     return listArray.find(list => {
       if(list != null)
       {

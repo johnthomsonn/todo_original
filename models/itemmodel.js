@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const itemSchema = new mongoose.Schema({
   content :{
     type:String,
-    required:true,
-    trim:true
+    required:true
   },
   completed : {
     type : Boolean,
