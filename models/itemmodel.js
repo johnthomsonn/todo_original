@@ -11,7 +11,7 @@ const itemSchema = new mongoose.Schema({
     type : Boolean,
     default : false
   }
-})
+});
 
 itemSchema.methods = {
   setCompleted : function()
@@ -23,6 +23,5 @@ itemSchema.methods = {
     this.completed = false;
   }
 }
-
 module.exports = mongoose.model('Item', itemSchema)
 module.exports = itemSchema;
