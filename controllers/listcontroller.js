@@ -14,7 +14,7 @@ exports.getListByListName = (req, res, next, listName) => {
       req.list = list;
     }
     next();
-  });
+  }).populate("items", "content completed");
 };
 
 exports.getLists = (req, res) => {
