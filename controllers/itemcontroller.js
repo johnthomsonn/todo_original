@@ -54,3 +54,40 @@ exports.deleteItem = (req, res) => {
     }
   });
 };
+
+exports.completeItem = (req,res) =>
+{
+  let item = req.item;
+  item.setCompleted();
+  item.save((err, updated) => {
+    if(err){
+      return res.status(400).json({
+        error : "error trying to check the item"
+      })
+    }
+    else
+    {
+      return res.json({
+        item : updated
+      })
+    }
+  });
+}
+
+exports.undoCompleteItem = async (req,res) => {
+  let item = req.item;
+  item.undoCompleted();
+  item.save((err, updated) => {
+    if(err){
+      return res.status(400).json({
+        error : "error trying to uncheck the item"
+      })
+    }
+    else
+    {
+      return res.json({
+        item : updated
+      })
+    }
+  });
+}
