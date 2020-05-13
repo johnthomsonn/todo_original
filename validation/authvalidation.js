@@ -18,22 +18,13 @@ exports.signupValidation = (req,res,next) => {
   .withMessage('password must be a minumum of 6 characters');
 
   const errors = req.validationErrors();
-  const errormsgs = [];
-  /*
+
+
   if (errors) {
     const firstErr = errors.map((error) => error.msg)[0];
     return res.status(400).json({
       error: firstErr
     });
-  }
-*/
-
-  if(errors)
-  {
-    errors.map(error => errormsgs.push({field : error.param, message: error.msg}))
-    return res.status(400).json({
-      error: errormsgs
-    })
   }
 
 
@@ -61,12 +52,11 @@ exports.signinValidation = (req,res,next) =>{
   const errors = req.validationErrors();
   const errormsgs = [];
 
-  if(errors)
-  {
-    errors.map(error => errormsgs.push({field : error.param, message: error.msg}))
+  if (errors) {
+    const firstErr = errors.map((error) => error.msg)[0];
     return res.status(400).json({
-      error: errormsgs
-    })
+      error: firstErr
+    });
   }
   next();
 }
