@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/usermodel");
+const _ = require('lodash')
 
 exports.getAllUsers = async (req, res) => {
   const allUsers = await User.find({}).select("username email");
@@ -14,7 +15,8 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getUserByUsernameParam = (req, res, next, username) => {
-  User.findOne({username}, (err, user) => {
+  const lowerCaseUsername = _.toLower(username)
+  User.findOne({username : lowerCaseUsername}, (err, user) => {
     if (err || !user) {
       console.log("Error when fetching user by username param: " + err);
       return res.status(400).json({

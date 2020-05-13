@@ -5,7 +5,8 @@ const _ = require("lodash");
 
 //middleware to attach list to req
 exports.getListByListName = (req, res, next, listName) => {
-  List.findOne({name: listName}, (err, list) => {
+  const lowercaseListName = _.toLower(listName);
+  List.findOne({name: lowercaseListName}, (err, list) => {
     if (err || !list) {
       res.status(400).json({
         error: "List not found by list name parameter"
@@ -32,7 +33,7 @@ exports.getLists = (req, res) => {
 
 exports.createList = async (req, res) => {
   const usersLists = req.user.lists;
-  req.body.name = _.lowerCase(req.body.name);
+  req.body.name = _.toLower(req.body.name);
 
   const promises = usersLists.map(listId =>
     List.findOne({_id: listId}, "name")

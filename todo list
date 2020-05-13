@@ -9,7 +9,6 @@ ROUGH WORK.
 
 
 
-  - probably need to lowercase the username and list name before working with them.
 
   --other
     -upgrade express-validator to >=6.4.1. will need to change how we validate
