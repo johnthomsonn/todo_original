@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {test} = require("../controllers/listcontroller");
+const {getLists, createList} = require("../controllers/listcontroller");
 const {getUserByUsernameParam} = require('../controllers/usercontroller')
-router.get("/", test);
+const {listCreationValidation} = require('../validation/listvalidation')
 
+router.get("/", getLists);
+router.post("/", listCreationValidation,createList)
 
 
 
