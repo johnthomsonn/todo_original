@@ -1,5 +1,6 @@
 # todo
-Todo list created with Node js and React
+Todo list created with Node js and React. It is a learning curve and so there is a mixture
+of methods. Some using async/await and others using callback functions.
 
 ## API endpoints
 
@@ -24,6 +25,7 @@ Todo list created with Node js and React
 - [x] delete account
 
 - [x] make todo lists  
+  - [ ] view specific list  
   - [ ] remove todo lists
 
 - [ ] make todo items  
