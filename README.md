@@ -17,8 +17,9 @@ of methods. Some using async/await and others using callback functions.
 ``` GET /users/:username/lists/:listname ``` => returns the specific list object given by :listname  (including name, items,_id)  
 ``` DELETE /users/:username/lists/:listname ``` => deletes the given :listName and returns the deleted list
 
-``` GET /users/:username/lists/:listname/items ``` => returns all the items in the given list :listname (excluding name and _id)  
-``` POST /users/:username/lists/:listname/items ``` => creates a new item and adds it to :listname then returns the items in :listname
+``` GET /users/:username/lists/:listname/items ``` => returns all the items in the given list :listname (excluding name and _id)    
+``` POST /users/:username/lists/:listname/items ``` => creates a new item and adds it to :listname then returns the items in :listname  
+``` DELETE /users/:username/lists/:listname/items/:itemId ``` => deletes the item with :itemId and returns a success message
 
 ### Backend todo list
 - [x] sign up/create user  
@@ -37,4 +38,4 @@ of methods. Some using async/await and others using callback functions.
 
 - [x] make todo items  
   - [ ] check / uncheck items off  
-   - [ ] remove checked items  
+   - [x] remove items  
