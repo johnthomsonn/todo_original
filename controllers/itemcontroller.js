@@ -2,6 +2,22 @@ const express = require("express");
 const Item = require("../models/itemmodel");
 const List = require('../models/listmodel')
 const {error,debug,yellow} = require('../utils/debug')
+
+exports.getItemById = async (req,res,next,id) => {
+  const item = await Item.findById(id);
+  if(item)
+  {
+    req.item = item;
+  }
+  else
+  {
+    res.status(400).json({
+      error: "Itemnot found by id parameter"
+    });
+  }
+  next();
+}
+
 exports.getItemsInList = (req, res) => {
   const list = req.list;
   return res.json(list.items);
