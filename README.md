@@ -37,5 +37,5 @@ of methods. Some using async/await and others using callback functions.
   - [x] remove todo lists
 
 - [x] make todo items  
-  - [ ] check / uncheck items off  
+  - [x] check / uncheck items off  
    - [x] remove items  
