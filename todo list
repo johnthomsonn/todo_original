@@ -1,14 +1,7 @@
 ROUGH WORK.
 
-
-
-/users/:username/lists => gets all lists
-/users/:username/lists/:list => gets list with items
-/users/:username/lists/:list/items => adds item to list
-/users/:username/lists/:list/items/:itemId => deletes specific item
-
-
-
+- validate creating lists/items
+- require sign in
 
   --other
     -upgrade express-validator to >=6.4.1. will need to change how we validate
