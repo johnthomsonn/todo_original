@@ -9,6 +9,10 @@ const itemSchema = new mongoose.Schema({
   completed : {
     type : Boolean,
     default : false
+  },
+  user :{
+    type:Number,
+    required:true
   }
 });
 
