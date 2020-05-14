@@ -2,14 +2,16 @@ require("dotenv").config();
 const User = require("../models/usermodel");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-
+const _ = require('lodash')
 
 exports.signup = async (req, res) => {
+  const email = _.toLower(req.body.email)
+  const username = _.toLower(req.body.username)
   const userExistsEmail = await User.findOne({
-    email: req.body.email
+    email
   });
   const userExistsUsername = await User.findOne({
-    username: req.body.username
+    username
   });
   if (userExistsEmail || userExistsUsername) {
     return res.status(409).json({
@@ -19,7 +21,11 @@ exports.signup = async (req, res) => {
 
   //email and username is unique and so we can create our user
 
-  let user = await new User(req.body);
+  let user = await new User({
+    email,
+    username,
+    password : req.body.password
+  });
   const createdUser = await user.save();
 
   //if save was unsuccessfull

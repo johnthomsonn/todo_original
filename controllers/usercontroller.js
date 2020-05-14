@@ -18,7 +18,6 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
   const lowerCaseUsername = _.toLower(username)
   User.findOne({username : lowerCaseUsername}, (err, user) => {
     if (err || !user) {
-      console.log("Error when fetching user by username param: " + err);
       return res.status(400).json({
         error: "Could not get user by username parameter"
       });

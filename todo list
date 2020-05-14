@@ -2,5 +2,6 @@ ROUGH WORK.
 
 - require sign in
 
-  --other
-    -upgrade express-validator to >=6.4.1. will need to change how we validate
+
+Bugs
+- creating a list, creates for that one person. but getting a users list, gets all lists.

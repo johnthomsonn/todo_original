@@ -18,17 +18,16 @@ exports.getListByListName = (req, res, next, listName) => {
   }).populate("items", "content completed");
 };
 
-exports.getLists = (req, res) => {
-  List.find({}, (err, lists) => {
-    if (err) {
-      console.log("error finding all lists");
-      return res.status(404).json({
-        error: "Unable to fetch all lists"
-      });
-    } else {
-      return res.json({lists});
-    }
-  });
+exports.getLists = async(req, res) => {
+  const listObjs = await req.user.lists.map(listId => List.findOne({_id : listId}))
+
+  const lists = await Promise.all(listObjs);
+
+  //lists.map(list => console.log(list))
+
+   return res.json({
+    lists
+   });
 };
 
 exports.createList = async (req, res) => {
