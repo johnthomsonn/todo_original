@@ -8,10 +8,10 @@ const listSchema = new mongoose.Schema({
     trim: true,
     required: true
   },
-  user :{
-    type: Number,
+  user_id :{
+    type: String,
     required:true
-  }
+  },
   items: [{type: ObjectId, ref: "Item"}]
 });
 

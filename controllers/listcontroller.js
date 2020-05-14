@@ -56,7 +56,7 @@ exports.createList = async (req, res) => {
       error: "You already have a list of that name"
     });
   } else {
-    const list = await new List(req.body);
+    const list = await new List({name : req.body.name, user_id : req.user._id});
     await list.save();
     const user = await User.findOneAndUpdate(
       {_id: req.user._id},

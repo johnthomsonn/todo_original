@@ -31,23 +31,7 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const user = req.user;
-  const lists = user.lists;
+  const userId = req.user._id;
+  
 
-  const listPromises = await lists.map(listId => List.findOne({_id : listId}))
-  const listsFulfilled = await Promise.all(listPromises);
-
-//console.log(listsFulfilled)
-
-  const itemPromises = await listsFulfilled.map(list => list.items.map(item =>Item.findOne({_id : item})))
-  const itemFulfilled = await Promise.all(itemPromises);
-
-  //itemFulfilled.map(i => console.log(i))
-
-  await itemFulfilled.map(item => item.remove());
-  await listsFulfilled.map(list => list.remove());
-
-  const u = await user.remove();
-
-  return res.json({message : "deleted user"})
 };
