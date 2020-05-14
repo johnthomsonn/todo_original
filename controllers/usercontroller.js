@@ -32,30 +32,39 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  const userId = req.user._id;
+  chalk.yellow("user param: " + req.user._id);
+  chalk.yellow("auth  param: " + req.auth._id);
+  if (req.user._id == req.auth._id) {
+    const userId = req.user._id;
 
-  try {
-    const itemDelete = await Item.deleteMany({user_id: userId});
-    const listDelete = await List.deleteMany({user_id: userId});
+    try {
+      const itemDelete = await Item.deleteMany({user_id: userId});
+      const listDelete = await List.deleteMany({user_id: userId});
 
-    if (itemDelete.ok && listDelete.ok) {
-      const removedUser = await req.user.remove();
+      if (itemDelete.ok && listDelete.ok) {
+        const removedUser = await req.user.remove();
 
-      if (removedUser) {
-        return res.json({
-          message: "user deleted"
-        });
+        if (removedUser) {
+          return res.json({
+            message: "user deleted"
+          });
+        }
+        chalk.error("removedUser is null");
       }
-      chalk.error("removedUser is null");
+      chalk.error("item and list delet is not ok");
+      return res.status(400).json({
+        error: "Failed to delete user - items and lists may be deleted"
+      });
+    } catch (err) {
+      chalk.error("Catch block error: " + err);
+      return res.json({
+        error: err
+      });
     }
-    chalk.error("item and list delet is not ok");
-    return res.status(400).json({
-      error: "Failed to delete user - items and lists may be deleted"
-    });
-  } catch (err) {
-    chalk.error("Catch block error: " + err);
-    return res.json({
-      error: err
+  } else {
+    chalk.error("Wrong user deleted attemp")
+    return res.status(401).json({
+      error: "Cannot delete someone that is not you"
     });
   }
 };
