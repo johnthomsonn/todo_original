@@ -106,7 +106,7 @@ exports.signout =(req,res) =>{
   });
 }
 
-exports.needAuthentication = expressjwt({
+exports.needAuthentication = expressJwt({
   secret : process.env.JWT_SECRET,
   userProperty : "auth"
 });

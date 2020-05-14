@@ -47,6 +47,14 @@ app.use("/users/:username/lists/:listname/items", itemroute)
 app.param("username", getUserByUsernameParam)
 app.param("listname", getListByListName)
 
+//unauthroised response
+app.use(function (err,req,res,next) {
+  if(err.name === 'UnauthorizedError')
+  {
+    return res.status(401).json({error : "Unauthorized"});
+  }
+})
+
 
 
 
