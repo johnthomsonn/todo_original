@@ -105,3 +105,8 @@ exports.signout =(req,res) =>{
     message : "User signed out"
   });
 }
+
+exports.needAuthentication = expressjwt({
+  secret : process.env.JWT_SECRET,
+  userProperty : "auth"
+});
