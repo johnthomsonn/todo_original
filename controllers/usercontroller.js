@@ -1,5 +1,7 @@
 const express = require("express");
 const User = require("../models/usermodel");
+const List = require("../models/listmodel");
+const Item = require("../models/itemmodel");
 const _ = require('lodash')
 
 exports.getAllUsers = async (req, res) => {
@@ -28,20 +30,16 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
   });
 };
 
-exports.deleteUser = (req, res) => {
-  User.findOneAndDelete({_id : req.user._id}, (err,user) => {
-    if(err) {
-      console.log("Could not delete user");
-      return res.status(400).json({
-        error : "Could not delete user"
-      });
-    }
-    else
-    {
-      return res.json({
-        message : "User deleted",
-        user
-      });
-    }
-  }).select("_id username email created");
+exports.deleteUser = async (req, res) => {
+  const user = req.user;
+  const lists = user.lists;
+  const listPromises = lists.map(listId => List.findOne({_id : listId}))
+  const listsFulfilled = await Promise.all(listPromises);
+  const itemPromises = listPromises.map(itemId => Item.findOne({_id : itemId}))
+  const itemFulfilled = await Promise.all(itemPromises);
+
+  await itemPromises.map(item => item.remove());
+  await listPromises.map(list => list.remove());
+  const u await user.remove();
+  res.json({message : deleted user})
 };
