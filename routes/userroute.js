@@ -5,7 +5,7 @@ const {deleteUser} = require('../controllers/usercontroller')
 const {needAuthentication} = require('../controllers/authcontroller')
 
 router.get("/", getAllUsers);
-router.delete("/:username",needAuthentication, deleteUser) //require sign in
+router.delete("/:username", deleteUser) //require sign in
 
 router.param("username", getUserByUsernameParam);
 

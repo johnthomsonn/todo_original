@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const {getItemsInList, addItemToList, getItemById,deleteItem,completeItem,undoCompleteItem} = require('../controllers/itemcontroller')
 const {itemCreationValidation} = require('../validation/itemvalidation')
-const {needAuthentication} = require('../controllers/authcontroller')
+const {needAuthentication,ensureCorrectUserPerformingAction} = require('../controllers/authcontroller')
 
-router.get("/", needAuthentication,getItemsInList)
-router.get("/:itemId/check",needAuthentication, completeItem)
-router.get("/:itemId/uncheck",needAuthentication, undoCompleteItem)
-router.post("/",needAuthentication, itemCreationValidation,addItemToList)
-router.delete("/:itemId",needAuthentication, deleteItem)
+router.get("/", getItemsInList)
+router.get("/:itemId/check", completeItem)
+router.get("/:itemId/uncheck", undoCompleteItem)
+router.post("/", itemCreationValidation,addItemToList)
+router.delete("/:itemId", deleteItem)
 
 router.param("itemId", getItemById)
 

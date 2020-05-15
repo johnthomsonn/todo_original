@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 const morgan = require("morgan");
 const expressValidator = require('express-validator');
 const {debug, error} = require('./utils/debug')
+const cookieParser = require('cookie-parser')
+const {ensureCorrectUserPerformingAction,needAuthentication} = require('./controllers/authcontroller')
 
 //Routes
 const authroute = require('./routes/authroute');
@@ -23,6 +25,7 @@ app.use(morgan("dev"));
 app.use(express.json())
 app.use(bodyParser.json());
 app.use(expressValidator());
+app.use(cookieParser());
 app.use(cors());
 
 // Database connection
@@ -40,9 +43,9 @@ mongoose.connection.on('error', err => {
 //get urls and route
 app.get("/", (req,res) => res.send("Home Page"));
 app.use("/auth",  authroute );
-app.use("/users",  userroute );
-app.use("/users/:username/lists", listroute);
-app.use("/users/:username/lists/:listname/items", itemroute)
+app.use("/users", needAuthentication, ensureCorrectUserPerformingAction, userroute );
+app.use("/users/:username/lists",needAuthentication, ensureCorrectUserPerformingAction, listroute);
+app.use("/users/:username/lists/:listname/items",needAuthentication, ensureCorrectUserPerformingAction, itemroute)
 //route parameters
 app.param("username", getUserByUsernameParam)
 app.param("listname", getListByListName)

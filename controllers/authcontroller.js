@@ -3,6 +3,7 @@ const User = require("../models/usermodel");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const _ = require('lodash')
+const {green,debug,yellow,error} = require('../utils/debug')
 
 exports.signup = async (req, res) => {
   const email = _.toLower(req.body.email)
@@ -42,7 +43,13 @@ exports.signup = async (req, res) => {
       },
       process.env.JWT_SECRET
     );
-    res.cookie("token", token, {expire: new Date() + 7257600});
+
+    const cookieOptions = {
+      httpOnly : true,
+      expires : 0
+    };
+
+    res.cookie("authtoken", token, cookieOptions);
 
     const {_id, username, email, created} = createdUser;
     return res.status(201).json({
@@ -84,7 +91,12 @@ exports.signin = async (req,res) => {
         },
         process.env.JWT_SECRET
       );
-      res.cookie("token", token, {expire: new Date() + 7257600});
+      const cookieOptions = {
+        httpOnly : true,
+        expires : 0
+      };
+      res.cookie("authtoken", token, cookieOptions);
+      yellow("cookie sent")
       const {_id, username, email, created} = foundUser;
       return res.status(200).json({
         token,
@@ -100,13 +112,78 @@ exports.signin = async (req,res) => {
 };
 
 exports.signout =(req,res) =>{
-  res.clearCookie("token");
+  res.clearCookie("authtoken");
   return res.json({
     message : "User signed out"
   });
 }
 
-exports.needAuthentication = expressJwt({
-  secret : process.env.JWT_SECRET,
-  userProperty : "auth"
-});
+//need to check that user is in database
+exports.needAuthentication =  (req,res,next) => {
+  const authToken = req.cookies.authtoken;
+  yellow(authToken)
+  //no auth token
+  if(!authToken)
+  {
+    error("NO AUTH TOKEN")
+       return res.status(401).json({
+      status : false,
+      error : "You are unatuhorised to perform this action."
+    });
+  }
+  //else auth token is there so check it is valid
+  else
+  {
+
+    const payload = jwt.verify(authToken, process.env.JWT_SECRET);
+    yellow(payload)
+    //if the secret is wrong
+    if(!payload)
+    {
+      res.clearCookie("authtoken");
+      return res.status(401).json({
+        status : false,
+        error : "You are not authorised to perform this action"
+      });
+    }
+    //else secret is valid so check user exists
+    else
+    {
+      User.findOne({_id : payload._id})
+      .then(user => {
+        if(!user)
+        {
+        return res.status(401).json({
+            status : false,
+            error : "User is not currently logged in"
+          });
+        }
+        else
+        {
+          req.auth = payload._id;
+          green(`User ${user.username} is acessing protected routes`);
+          next();
+        }
+      })
+    }
+  }
+
+}
+
+exports.ensureCorrectUserPerformingAction = (req,res,next) =>{
+  const loggedUser = req.auth;
+  const urlUser = req.user._id;
+  console.log("logged " + loggedUser);
+  console.log("url " + urlUser)
+  if(loggedUser != urlUser)
+  {
+    return res.status(401).json({
+      status : true,
+      error: "You cannot alter another user"
+    })
+  }
+  else
+  {
+    next();
+  }
+}
