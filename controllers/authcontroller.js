@@ -121,7 +121,6 @@ exports.signout =(req,res) =>{
 //need to check that user is in database
 exports.needAuthentication =  (req,res,next) => {
   const authToken = req.cookies.authtoken;
-  yellow(authToken)
   //no auth token
   if(!authToken)
   {
@@ -136,7 +135,6 @@ exports.needAuthentication =  (req,res,next) => {
   {
 
     const payload = jwt.verify(authToken, process.env.JWT_SECRET);
-    yellow(payload)
     //if the secret is wrong
     if(!payload)
     {
@@ -171,12 +169,13 @@ exports.needAuthentication =  (req,res,next) => {
 }
 
 exports.ensureCorrectUserPerformingAction = (req,res,next) =>{
+
   const loggedUser = req.auth;
   const urlUser = req.user._id;
-  console.log("logged " + loggedUser);
-  console.log("url " + urlUser)
+
   if(loggedUser != urlUser)
   {
+
     return res.status(401).json({
       status : true,
       error: "You cannot alter another user"

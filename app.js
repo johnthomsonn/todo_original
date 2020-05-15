@@ -43,7 +43,7 @@ mongoose.connection.on('error', err => {
 //get urls and route
 app.get("/", (req,res) => res.send("Home Page"));
 app.use("/auth",  authroute );
-app.use("/users", needAuthentication, ensureCorrectUserPerformingAction, userroute );
+app.use("/users", needAuthentication, userroute );
 app.use("/users/:username/lists",needAuthentication, ensureCorrectUserPerformingAction, listroute);
 app.use("/users/:username/lists/:listname/items",needAuthentication, ensureCorrectUserPerformingAction, itemroute)
 //route parameters

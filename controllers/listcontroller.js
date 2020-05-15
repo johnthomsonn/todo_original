@@ -24,6 +24,9 @@ exports.getLists = async(req, res) => {
 
   const lists = await Promise.all(listObjs);
 
+  console.log("auth " + req.auth);
+  console.log("auth_id " + req.auth._id)
+
   //lists.map(list => console.log(list))
 
    return res.json({
