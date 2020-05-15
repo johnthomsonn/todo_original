@@ -16,6 +16,7 @@ exports.signup = async (req, res) => {
   });
   if (userExistsEmail || userExistsUsername) {
     return res.status(409).json({
+      status : false,
       error: "Email or username is already in use"
     });
   }
@@ -32,6 +33,7 @@ exports.signup = async (req, res) => {
   //if save was unsuccessfull
   if (!createdUser) {
     return json.status(500).json({
+      status: false,
       error: "Error when saving the new user"
     });
   }
@@ -53,7 +55,7 @@ exports.signup = async (req, res) => {
 
     const {_id, username, email, created} = createdUser;
     return res.status(201).json({
-      token,
+      status: true,
       user: {
         _id,
         username,
@@ -69,6 +71,7 @@ exports.signin = async (req,res) => {
   if(!foundUser )
   {
     return res.status(404).json({
+      status : false,
       error : "User not found with given credentials"
     });
   }
@@ -79,6 +82,7 @@ exports.signin = async (req,res) => {
     if(!passwordsMatch)
     {
       return res.status(401).json({
+        status:false,
         error : "User not found with given credentials"
       });
     }
@@ -96,10 +100,9 @@ exports.signin = async (req,res) => {
         expires : 0
       };
       res.cookie("authtoken", token, cookieOptions);
-      yellow("cookie sent")
       const {_id, username, email, created} = foundUser;
       return res.status(200).json({
-        token,
+        status : true,
         user: {
           _id,
           username,
@@ -114,6 +117,7 @@ exports.signin = async (req,res) => {
 exports.signout =(req,res) =>{
   res.clearCookie("authtoken");
   return res.json({
+    status: false,
     message : "User signed out"
   });
 }
@@ -124,7 +128,6 @@ exports.needAuthentication =  (req,res,next) => {
   //no auth token
   if(!authToken)
   {
-    error("NO AUTH TOKEN")
        return res.status(401).json({
       status : false,
       error : "You are unatuhorised to perform this action."
@@ -159,7 +162,6 @@ exports.needAuthentication =  (req,res,next) => {
         else
         {
           req.auth = payload._id;
-          green(`User ${user.username} is acessing protected routes`);
           next();
         }
       })

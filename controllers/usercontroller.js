@@ -10,18 +10,25 @@ exports.getAllUsers = async (req, res) => {
   if (!allUsers) {
     console.log("Error when trying to fetch all users");
     return json.status(404).json({
+      status: true,
       error: "Unable to fetch all users"
     });
   } else {
-    return res.json({users: allUsers});
+    return res.json({
+      status: true,
+      users: allUsers
+    });
   }
 };
 
 exports.getUserByUsernameParam = (req, res, next, username) => {
+  let status = false
+  if(req.auth) status = true
   const lowerCaseUsername = _.toLower(username);
   User.findOne({username: lowerCaseUsername}, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
+        status,
         error: "Could not get user by username parameter"
       });
     } else {
@@ -32,8 +39,6 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  chalk.yellow("user param: " + req.user._id);
-  chalk.yellow("auth  param: " + req.auth._id);
   if (req.user._id == req.auth) {
     const userId = req.user._id;
 
@@ -46,24 +51,24 @@ exports.deleteUser = async (req, res) => {
 
         if (removedUser) {
           return res.json({
+            status: true,
             message: "user deleted"
           });
         }
-        chalk.error("removedUser is null");
       }
-      chalk.error("item and list delet is not ok");
       return res.status(400).json({
+        status: true,
         error: "Failed to delete user - items and lists may be deleted"
       });
     } catch (err) {
-      chalk.error("Catch block error: " + err);
       return res.json({
+        status: true,
         error: err
       });
     }
   } else {
-    chalk.error("Wrong user deleted attemp")
     return res.status(401).json({
+      status: true,
       error: "Cannot delete someone that is not you"
     });
   }

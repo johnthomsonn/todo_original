@@ -9,7 +9,8 @@ exports.getItemById = async (req, res, next, id) => {
     req.item = item;
   } else {
     res.status(400).json({
-      error: "Itemnot found by id parameter"
+      status: true,
+      error: "Item not found by id parameter"
     });
   }
   next();
@@ -17,8 +18,10 @@ exports.getItemById = async (req, res, next, id) => {
 
 exports.getItemsInList = (req, res) => {
   const list = req.list;
-  yellow("List is: " + list);
-  return res.json(list.items);
+  return res.json({
+    status: true,
+    items : list.items
+  });
 };
 
 exports.addItemToList = async (req, res) => {
@@ -31,10 +34,14 @@ exports.addItemToList = async (req, res) => {
 
     list.items.push(newItem);
     await list.save();
-    return res.json(list.items);
+    return res.json({
+      status: true,
+      items : list.items
+    });
   } catch (err) {
     error(err);
     res.status(400).json({
+      status: true,
       error: err
     });
   }
@@ -44,12 +51,14 @@ exports.deleteItem = (req, res) => {
   req.item.remove((err,item) => {
     if (err) {
       res.status(400).json({
+        status: true,
         error : "Could not delete item " + req.item
       })
     }
     else
     {
       return res.json({
+        status: true,
         message : `item (${item.content}) deleted`
       })
     }
@@ -63,12 +72,14 @@ exports.completeItem = (req,res) =>
   item.save((err, updated) => {
     if(err){
       return res.status(400).json({
+        status: true,
         error : "error trying to check the item"
       })
     }
     else
     {
       return res.json({
+        status: true,
         item : updated
       })
     }
@@ -81,12 +92,14 @@ exports.undoCompleteItem = async (req,res) => {
   item.save((err, updated) => {
     if(err){
       return res.status(400).json({
+        status: true,
         error : "error trying to uncheck the item"
       })
     }
     else
     {
       return res.json({
+        status: true,
         item : updated
       })
     }

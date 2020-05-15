@@ -11,6 +11,7 @@ exports.getListByListName = (req, res, next, listName) => {
   List.findOne({name: lowercaseListName}, (err, list) => {
     if (err || !list) {
       res.status(400).json({
+        status: true,
         error: "List not found by list name parameter"
       });
     } else {
@@ -29,6 +30,7 @@ exports.getLists = async(req, res) => {
   //lists.map(list => console.log(list))
 
    return res.json({
+     status: true,
     lists
    });
 };
@@ -56,6 +58,7 @@ exports.createList = async (req, res) => {
   //console.log(found);
   if (found) {
     return res.status(403).json({
+      status: true,
       error: "You already have a list of that name"
     });
   } else {
@@ -69,11 +72,13 @@ exports.createList = async (req, res) => {
     if (user) {
       user.hashed_password = undefined;
       return res.json({
+        status: true,
         message: "List created successfully",
         user: user
       });
     } else {
       return res.status(400).json({
+        status: true,
         error: "an error occured when creating new list "
       });
     }
@@ -81,7 +86,10 @@ exports.createList = async (req, res) => {
 };
 
 exports.getList = (req, res) => {
-  return res.json(req.list);
+  return res.json({
+status: true,
+    list : req.list
+  });
 };
 
 exports.deleteList = (req, res) => {
@@ -90,12 +98,14 @@ exports.deleteList = (req, res) => {
     if(err)
     {
       return res.status(400).json({
+        status: true,
         error : "Could not remove the list " + err
       });
     }
     else
     {
       return res.json({
+        status: true,
         message : `List ${listToDelete.name} has been deleted`
       });
     }
