@@ -2,12 +2,12 @@ require("dotenv").config();
 const User = require("../models/usermodel");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
-const _ = require('lodash')
-const {green,debug,yellow,error} = require('../utils/debug')
+const _ = require("lodash");
+const {green, debug, yellow, error} = require("../utils/debug");
 
 exports.signup = async (req, res) => {
-  const email = _.toLower(req.body.email)
-  const username = _.toLower(req.body.username)
+  const email = _.toLower(req.body.email);
+  const username = _.toLower(req.body.username);
   const userExistsEmail = await User.findOne({
     email
   });
@@ -16,7 +16,7 @@ exports.signup = async (req, res) => {
   });
   if (userExistsEmail || userExistsUsername) {
     return res.status(409).json({
-      status : false,
+      status: false,
       error: "Email or username is already in use"
     });
   }
@@ -26,7 +26,7 @@ exports.signup = async (req, res) => {
   let user = await new User({
     email,
     username,
-    password : req.body.password
+    password: req.body.password
   });
   const createdUser = await user.save();
 
@@ -47,8 +47,8 @@ exports.signup = async (req, res) => {
     );
 
     const cookieOptions = {
-      httpOnly : true,
-      expires : 0
+      httpOnly: true,
+      expires: 0
     };
 
     res.cookie("authtoken", token, cookieOptions);
@@ -66,28 +66,22 @@ exports.signup = async (req, res) => {
   } // ends succesfful creation of new user
 };
 
-exports.signin = async (req,res) => {
-  let foundUser = await User.findOne({email : req.body.email});
-  if(!foundUser )
-  {
+exports.signin = async (req, res) => {
+  let foundUser = await User.findOne({email: req.body.email});
+  if (!foundUser) {
     return res.status(404).json({
-      status : false,
-      error : "User not found with given credentials"
+      status: false,
+      error: "User not found with given credentials"
     });
-  }
-  else
-  {
+  } else {
     //user is found so hash and compare passwords
-    const passwordsMatch = await foundUser.comparePasswords(req.body.password)
-    if(!passwordsMatch)
-    {
+    const passwordsMatch = await foundUser.comparePasswords(req.body.password);
+    if (!passwordsMatch) {
       return res.status(401).json({
-        status:false,
-        error : "User not found with given credentials"
+        status: false,
+        error: "User not found with given credentials"
       });
-    }
-    else
-    {
+    } else {
       //user has entered correct email/password so send token
       const token = jwt.sign(
         {
@@ -96,13 +90,13 @@ exports.signin = async (req,res) => {
         process.env.JWT_SECRET
       );
       const cookieOptions = {
-        httpOnly : true,
-        expires : 0
+        httpOnly: true,
+        expires: 0
       };
       res.cookie("authtoken", token, cookieOptions);
       const {_id, username, email, created} = foundUser;
       return res.status(200).json({
-        status : true,
+        status: true,
         user: {
           _id,
           username,
@@ -114,77 +108,70 @@ exports.signin = async (req,res) => {
   }
 };
 
-exports.signout =(req,res) =>{
+exports.signout = (req, res) => {
   res.clearCookie("authtoken");
-  return res.json({
-    status: false,
-    message : "User signed out"
-  });
-}
+  const isDeleted = req.query.user;
+  if (isDeleted === "deleted") {
+    return res.json({
+      status: false,
+      message: "User signed out and deleted"
+    });
+  } else {
+    return res.json({
+      status: false,
+      message: "User signed out"
+    });
+  }
+};
 
 //need to check that user is in database
-exports.needAuthentication =  (req,res,next) => {
+exports.needAuthentication = (req, res, next) => {
   const authToken = req.cookies.authtoken;
   //no auth token
-  if(!authToken)
-  {
-       return res.status(401).json({
-      status : false,
-      error : "You are unatuhorised to perform this action."
+  if (!authToken) {
+    return res.status(401).json({
+      status: false,
+      error: "You are not authorised to perform this action."
     });
   }
   //else auth token is there so check it is valid
-  else
-  {
-
+  else {
     const payload = jwt.verify(authToken, process.env.JWT_SECRET);
     //if the secret is wrong
-    if(!payload)
-    {
+    if (!payload) {
       res.clearCookie("authtoken");
       return res.status(401).json({
-        status : false,
-        error : "You are not authorised to perform this action"
+        status: false,
+        error: "You are not authorised to perform this action"
       });
     }
     //else secret is valid so check user exists
-    else
-    {
-      User.findOne({_id : payload._id})
-      .then(user => {
-        if(!user)
-        {
-        return res.status(401).json({
-            status : false,
-            error : "User is not currently logged in"
+    else {
+      User.findOne({_id: payload._id}).then(user => {
+        if (!user) {
+          return res.status(401).json({
+            status: false,
+            error: "User is not currently logged in"
           });
-        }
-        else
-        {
+        } else {
           req.auth = payload._id;
           next();
         }
-      })
+      });
     }
   }
+};
 
-}
-
-exports.ensureCorrectUserPerformingAction = (req,res,next) =>{
-
+exports.ensureCorrectUserPerformingAction = (req, res, next) => {
   const loggedUser = req.auth;
   const urlUser = req.user._id;
 
-  if(loggedUser != urlUser)
-  {
-
+  if (loggedUser != urlUser) {
     return res.status(401).json({
-      status : true,
-      error: "You cannot alter another user"
-    })
-  }
-  else
-  {
+      status: true,
+      error: "You are not the authorised user to perform this action"
+    });
+  } else {
     next();
   }
-}
+};

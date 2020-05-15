@@ -22,8 +22,6 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.getUserByUsernameParam = (req, res, next, username) => {
-  let status = false
-  if(req.auth) status = true
   const lowerCaseUsername = _.toLower(username);
   User.findOne({username: lowerCaseUsername}, (err, user) => {
     if (err || !user) {
@@ -50,10 +48,12 @@ exports.deleteUser = async (req, res) => {
         const removedUser = await req.user.remove();
 
         if (removedUser) {
-          return res.json({
-            status: true,
-            message: "user deleted"
-          });
+          //  res.json({
+          //   status: true,
+          //   message: "user deleted"
+          // });
+          let userDel = encodeURIComponent("deleted")
+          return res.redirect("/auth/signout?user="+userDel);
         }
       }
       return res.status(400).json({
@@ -61,9 +61,10 @@ exports.deleteUser = async (req, res) => {
         error: "Failed to delete user - items and lists may be deleted"
       });
     } catch (err) {
+      chalk.yellow("ERROR OCCURED IN TRY")
       return res.json({
         status: true,
-        error: err
+        error: err.msg
       });
     }
   } else {

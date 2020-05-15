@@ -6,7 +6,7 @@ const {signupValidation, signinValidation,getSignupErrors,getSignInErrors} = req
 
 router.post("/signup", getSignupErrors, signupValidation ,signup);
 router.post("/signin", getSignInErrors,signinValidation, signin);
-router.get("/signout",needAuthentication, signout); //need to require signin
+router.get("/signout", signout); 
 
 
 module.exports = router;
