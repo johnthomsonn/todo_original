@@ -18,6 +18,7 @@ exports.getSignupErrors = [
     .withMessage("username cannot contain spaces")
     .trim()
     .escape(),
+
   check("email", "A valid email is required")
     .not()
     .isEmpty()

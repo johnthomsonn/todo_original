@@ -42,4 +42,4 @@ of methods. Some using async/await and others using callback functions.
   - [x] check / uncheck items off  
    - [x] remove items  
 
-- [ ] Sanitize inputs  
+- [x] Sanitize inputs  
