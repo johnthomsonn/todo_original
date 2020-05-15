@@ -3,22 +3,11 @@ const {check, validationResult} = require("express-validator/check");
 exports.signupValidation = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({error: errors.array()});
+    const errArray = errors.array()
+    const msgs = errArray.map(error => error.msg)
+    return res.status(400).json({error : msgs})
   }
   next();
-
-  /*
-  if (errors) {
-    const firstErr = errors.map((error) => error.msg)[0];
-    return res.status(400).json({
-      error: firstErr
-    });
-  }
-
-
-//proceed to next middleware
-  next();
-*/
 };
 
 exports.getSignupErrors = [
@@ -55,10 +44,11 @@ exports.getSignInErrors = ([
 ]);
 
 exports.signinValidation = (req, res, next) => {
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({error: errors.array()});
+    const errArray = errors.array()
+    const msgs = errArray.map(error => error.msg)
+    return res.status(400).json({error : msgs})
   }
   next();
 };

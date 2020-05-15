@@ -1,12 +1,22 @@
+const {check, validationResult} = require("express-validator/check");
+
+exports.getItemCreationErrors = (
+  [
+    [
+      check("content", "You need to do something")
+      .not()
+      .isEmpty()
+      .trim()
+      .escape()
+    ]
+  ]
+)
 exports.itemCreationValidation = (req, res, next) => {
-  req.check("content", "some content is required").notEmpty();
-
-  const error = req.validationErrors();
-
-  if (error) {
-    return res.status(400).json({
-      error: error[0].msg
-    });
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errArray = errors.array()
+    const msgs = errArray.map(error => error.msg)
+    return res.status(400).json({error : msgs})
   }
   next();
 };
