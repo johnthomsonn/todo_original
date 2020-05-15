@@ -5,6 +5,8 @@ controllers/testcontroller.js
 routes/testroute.js
 validation/testvalidation.js
 
+react-frontend/node_modules/
+
 # Logs
 logs
 *.log
