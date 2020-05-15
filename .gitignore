@@ -1,6 +1,9 @@
 #custom
 images/
 *.txt
+controllers/testcontroller.js
+routes/testroute.js
+validation/testvalidation.js
 
 # Logs
 logs
