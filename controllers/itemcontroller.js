@@ -17,6 +17,7 @@ exports.getItemById = async (req, res, next, id) => {
 
 exports.getItemsInList = (req, res) => {
   const list = req.list;
+  yellow("List is: " + list);
   return res.json(list.items);
 };
 

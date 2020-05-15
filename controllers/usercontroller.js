@@ -34,7 +34,7 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
 exports.deleteUser = async (req, res) => {
   chalk.yellow("user param: " + req.user._id);
   chalk.yellow("auth  param: " + req.auth._id);
-  if (req.user._id == req.auth._id) {
+  if (req.user._id == req.auth) {
     const userId = req.user._id;
 
     try {

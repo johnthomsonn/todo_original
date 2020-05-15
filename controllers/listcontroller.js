@@ -2,11 +2,12 @@ const express = require("express");
 const List = require("../models/listmodel");
 const User = require("../models/usermodel");
 const _ = require("lodash");
+const {yellow} = require('../utils/debug')
 
 
 //middleware to attach list to req
 exports.getListByListName = (req, res, next, listName) => {
-  const lowercaseListName = _.toLower(listName);
+  const lowercaseListName = _.lowerCase(listName);
   List.findOne({name: lowercaseListName}, (err, list) => {
     if (err || !list) {
       res.status(400).json({
@@ -24,8 +25,6 @@ exports.getLists = async(req, res) => {
 
   const lists = await Promise.all(listObjs);
 
-  console.log("auth " + req.auth);
-  console.log("auth_id " + req.auth._id)
 
   //lists.map(list => console.log(list))
 
