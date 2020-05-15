@@ -41,3 +41,5 @@ of methods. Some using async/await and others using callback functions.
 - [x] make todo items  
   - [x] check / uncheck items off  
    - [x] remove items  
+
+- [ ] Sanitize inputs  

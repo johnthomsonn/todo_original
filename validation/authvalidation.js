@@ -1,5 +1,8 @@
+const {body} = require('express-validator');
+
 exports.signupValidation = (req,res,next) => {
   //check username is not null
+  body('username').trim().escape().sanitizeBody();
   req.check('username', 'username is required').notEmpty();
 
   //check email is not null, is valid format and suitable length
