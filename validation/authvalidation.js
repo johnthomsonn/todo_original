@@ -1,28 +1,13 @@
-const {body} = require('express-validator');
+const {check, validationResult} = require("express-validator/check");
 
-exports.signupValidation = (req,res,next) => {
-  //check username is not null
-  body('username').trim().escape().sanitizeBody();
-  req.check('username', 'username is required').notEmpty();
+exports.signupValidation = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({error: errors.array()});
+  }
+  next();
 
-  //check email is not null, is valid format and suitable length
-  req.check('email', 'email is required').notEmpty()
-  .matches(/.+\@.+\..+/)
-  .withMessage('must be a valid format (containing @ and .)')
-  .isLength({
-    min : 5
-  })
-  .withMessage('must be a minumum of 5 characters');
-
-
-  //check password is not null and minimum length of 6
-  req.check('password', 'password is required').notEmpty()
-  .isLength({min:6})
-  .withMessage('password must be a minumum of 6 characters');
-
-  const errors = req.validationErrors();
-
-
+  /*
   if (errors) {
     const firstErr = errors.map((error) => error.msg)[0];
     return res.status(400).json({
@@ -33,33 +18,47 @@ exports.signupValidation = (req,res,next) => {
 
 //proceed to next middleware
   next();
+*/
+};
 
-}
+exports.getSignupErrors = [
+  check("username", "username is required")
+    .not()
+    .isEmpty()
+    .custom(value => !/\s/.test(value))
+    .withMessage("username cannot conotain spaces")
+    .trim()
+    .escape(),
+  check("email", "A valid email is required")
+    .not()
+    .isEmpty()
+    .isEmail()
+    .normalizeEmail(),
+  check("password", "A password is required")
+    .not()
+    .isEmpty()
+    .isLength({min: 6})
+    .withMessage("Password must be at leat 6 characters")
+];
 
-exports.signinValidation = (req,res,next) =>{
-  //check email is not null, is valid format and suitable length
-  req.check('email', 'email is required').notEmpty()
-  .matches(/.+\@.+\..+/)
-  .withMessage('must be a valid format (containing @ and .)')
-  .isLength({
-    min : 5
-  })
-  .withMessage('must be a minumum of 5 characters');
+exports.getSignInErrors = ([
+  check("email", "A valid email is required")
+    .not()
+    .isEmpty()
+    .isEmail()
+    .normalizeEmail(),
+  check("password", "A password is required")
+    .not()
+    .isEmpty()
+    .isLength({min: 6})
+    .withMessage("Password must be at leat 6 characters")
+]);
 
+exports.signinValidation = (req, res, next) => {
 
-  //check password is not null and minimum length of 6
-  req.check('password', 'password is required').notEmpty()
-  .isLength({min:6})
-  .withMessage('password must be a minumum of 6 characters');
-
-  const errors = req.validationErrors();
-  const errormsgs = [];
-
-  if (errors) {
-    const firstErr = errors.map((error) => error.msg)[0];
-    return res.status(400).json({
-      error: firstErr
-    });
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({error: errors.array()});
   }
   next();
-}
+};
