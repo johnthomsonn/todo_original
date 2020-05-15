@@ -16,7 +16,7 @@ exports.signup = async (req, res) => {
   });
   if (userExistsEmail || userExistsUsername) {
     return res.status(409).json({
-      error: "Email is already in use"
+      error: "Email or username is already in use"
     });
   }
 
