@@ -6,8 +6,8 @@ import NavBar from './components/main//NavBar/NavBar'
 function App() {
   return (
     <div>
-    <NavBar />
     <BrowserRouter>
+    <NavBar />
       <MainRouter />
     </BrowserRouter>
     </div>
