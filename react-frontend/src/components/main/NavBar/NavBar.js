@@ -2,13 +2,16 @@ import React from "react";
 import NavBarCss from "./NavBar.css"
 import {Link} from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = (props) => {
+
+
+
   return (
     <nav className="navbar navbar-expand-md">
-      <a className="navbar-brand">Todo</a>
+      <span className="navbar-brand">Todo</span>
       <ul className="nav nav-pills mr-auto">
         <li className="nav-item">
-          <Link className="nav-link active" to={"/"}>
+          <Link className="nav-link" to={"/"}>
             Home
           </Link>
         </li>
@@ -32,14 +35,14 @@ const NavBar = () => {
         </ul>
         <ul className="ml-auto nav nav-pills">
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to={"/signup"}>
               Sign up
-            </a>
+            </Link>
           </li>
           <li className="nav-item justify-content-end">
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to={"/signin"}>
               Sign in
-            </a>
+            </Link>
           </li>
       </ul>
     </nav>

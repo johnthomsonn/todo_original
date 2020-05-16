@@ -1,4 +1,19 @@
 nav {
   background-color: #eddf91;
-  color:green;
+  color:black;
+  font-family: 'Balsamiq Sans', cursive;
+  font-size: 3rem
+}
+
+.navbar-brand {
+}
+
+.nav-link {
+  color:black;
+}
+
+.nav-link:hover {
+  transform: translateY(-3px);
+  color:black;
+  font-weight:700
 }
