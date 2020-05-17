@@ -36,6 +36,15 @@
 .signup-form-div button:hover {
   background-color: yellow;
 }
+.signup-form-div button:active {
+  background-color: yellow;
+}
+.signup-form-div button:visited {
+  background-color: #eddf91;
+}
+.signup-form-div button:focus {
+  background-color: #eddf91;
+}
 
 .header h1 {
   font-weight: 400;
