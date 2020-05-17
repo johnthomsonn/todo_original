@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from "react";
 import NavBar from "../main/NavBar/NavBar";
 import "./Signup.css";
-import {cleanInput} from '../../auth/Auth'
+import {cleanInput, validateEmail} from '../../auth/Auth'
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -28,13 +28,11 @@ const Signup = () => {
     alert()
   };
 
-  const validEmail = () => {
-    return /.+@.+\..+/.test(input.email)
-  }
+
 
   const validateInput = () => {
     const cleanUsername = cleanInput(input.username) && input.username.length > 0;
-    setGoodInput(cleanUsername && validEmail()  && input.password.length >= 6 && input.password === input.confirm)
+    setGoodInput(cleanUsername && validateEmail(input.email)  && input.password.length >= 6 && input.password === input.confirm)
 
   }
 
