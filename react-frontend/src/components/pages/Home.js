@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../main/NavBar/NavBar";
-import HomeCss from './Home.css'
+import './Home.css'
 
 import CreateTodo from '../main/CreateTodo'
 const Home = () => {

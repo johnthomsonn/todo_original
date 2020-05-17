@@ -54,13 +54,13 @@ const Signup = () => {
 
         <div className="signup-form-div ">
           <form className="signup-form " onSubmit={handleSubmit}>
-            <div class="form-group">
-              <label for="usernameInput" class="bmd-label-floating">
+            <div className="form-group">
+              <label htmlFor="usernameInput" className="bmd-label-floating">
                 Username:
               </label>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="usernameInput"
                 name="usernameInput"
                 value={input.username}
@@ -69,58 +69,58 @@ const Signup = () => {
               />
             </div>
 
-            <div class="form-group">
-              <label for="emailInput" class="bmd-label-floating">
+            <div className="form-group">
+              <label htmlFor="emailInput" className="bmd-label-floating">
                 Email:
               </label>
               <input
                 type="email"
-                class="form-control"
+                className="form-control"
                 id="emailInput"
                 name="emailInput"
                 value={input.email}
                 style={style}
                 onChange={handleChange("email")}
               />
-              <span class="bmd-help" style={{color: "yellow"}}>
+              <span className="bmd-help" style={{color: "yellow"}}>
                 We'll never share your email with anyone else.
               </span>
             </div>
 
-            <div class="form-group">
-              <label for="passwordInput" class="bmd-label-floating">
+            <div className="form-group">
+              <label htmlFor="passwordInput" className="bmd-label-floating">
                 Password:
               </label>
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="passwordInput"
                 name="passwordInput"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 value={input.password}
                 onChange={handleChange("password")}
                 style={style}
               />
-              <span class="bmd-help ml-3" > <span style={{color : (input.password.length >= 6 ? "green" : "red")}}>{`${input.password.length}  / 6`} </span></span>
+              <span className="bmd-help ml-3" > <span style={{color : (input.password.length >= 6 ? "green" : "red")}}>{`${input.password.length}  / 6`} </span></span>
             </div>
 
-            <div class="form-group">
-              <label for="passwordInputConfirm" class="bmd-label-floating">
+            <div className="form-group">
+              <label htmlFor="passwordInputConfirm" className="bmd-label-floating">
                 Confirm Password:
               </label>
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 id="passwordInputConfirm"
                 name="passwordInputConfirm"
-                autocomplete="new-password"
+                autoComplete="new-password"
                 onChange={handleChange("confirm")}
                 value={input.confirm}
                 style={style}
               />
             </div>
 
-            <button type="submit" class="btn  btn-raised" disabled={(!goodInput ? true : false)}>
+            <button type="submit" className="btn  btn-raised" disabled={(!goodInput ? true : false)}>
               Sign up
             </button>
           </form>
