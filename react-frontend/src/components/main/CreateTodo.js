@@ -21,7 +21,7 @@ const CreateTodo = () => {
 
   const validInput = () => {
 
-    if(todoInput == "" || cleanInput(todoInput))
+    if(todoInput == "" || !cleanInput(todoInput))
     {
       setGoodInput(false)
     }else

@@ -34,8 +34,7 @@ const Signup = () => {
 
   const validateInput = () => {
     const cleanUsername = cleanInput(input.username) && input.username.length > 0;
-
-    setGoodInput(cleanUsername && validEmail()  && input.password.length > 6 && input.password === input.confirm)
+    setGoodInput(cleanUsername && validEmail()  && input.password.length >= 6 && input.password === input.confirm)
 
   }
 
