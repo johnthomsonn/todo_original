@@ -10,6 +10,9 @@ const Signup = () =>{
       <div className="container sign-up-container">
         <h1 className="header">Sign Up</h1>
 
+        <form className="">
+          
+        </form>
       </div>
     </>
   );
