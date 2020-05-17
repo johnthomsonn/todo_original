@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import NavBar from "../main/NavBar/NavBar";
 import "./Signup.css";
+import {cleanInput} from '../../auth/Auth'
 
 const Signup = () => {
   const [input, setInput] = useState({
@@ -10,11 +11,34 @@ const Signup = () => {
     confirm: ""
   });
 
-  const handleChange = event => {};
+  const [goodInput, setGoodInput] = useState(false);
+
+  useEffect( () => {
+    validateInput();
+  }, [input])
+
+
+  const handleChange = name => event => {
+    const userIn = event.target.value;
+    setInput({...input, [name] : userIn});
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
+    alert()
   };
+
+  const validEmail = () => {
+    return /.+@.+\..+/.test(input.email)
+  }
+
+  const validateInput = () => {
+    const cleanUsername = cleanInput(input.username) && input.username.length > 0;
+
+    setGoodInput(cleanUsername && validEmail()  && input.password.length > 6 && input.password === input.confirm)
+
+  }
+
 
   const style = {
     backgroundImage: `linear-gradient(0deg, #eddf91 2px, rgba(0, 150, 136, 0) 0),
@@ -42,6 +66,7 @@ const Signup = () => {
                 name="usernameInput"
                 value={input.username}
                 style={style}
+                onChange={handleChange("username")}
               />
             </div>
 
@@ -56,6 +81,7 @@ const Signup = () => {
                 name="emailInput"
                 value={input.email}
                 style={style}
+                onChange={handleChange("email")}
               />
               <span class="bmd-help" style={{color: "yellow"}}>
                 We'll never share your email with anyone else.
@@ -73,9 +99,10 @@ const Signup = () => {
                 name="passwordInput"
                 autocomplete="new-password"
                 value={input.password}
+                onChange={handleChange("password")}
                 style={style}
               />
-              <span class="bmd-help">Please use a unique password</span>
+              <span class="bmd-help ml-3" > <span style={{color : (input.password.length >= 6 ? "green" : "red")}}>{`${input.password.length}  / 6`} </span></span>
             </div>
 
             <div class="form-group">
@@ -88,12 +115,13 @@ const Signup = () => {
                 id="passwordInputConfirm"
                 name="passwordInputConfirm"
                 autocomplete="new-password"
+                onChange={handleChange("confirm")}
                 value={input.confirm}
                 style={style}
               />
             </div>
 
-            <button type="submit" class="btn  btn-raised">
+            <button type="submit" class="btn  btn-raised" disabled={(!goodInput ? true : false)}>
               Sign up
             </button>
           </form>
