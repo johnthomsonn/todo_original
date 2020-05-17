@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server" : "nodemon app.js",
-    "client" : "cd react-frontend && npm start"
+    "server": "nodemon app.js",
+    "client": "cd react-frontend && npm start"
   },
   "repository": {
     "type": "git",
