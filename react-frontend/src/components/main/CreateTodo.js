@@ -31,13 +31,19 @@ const CreateTodo = () => {
 
   const submitTodo = evt => {
     evt.preventDefault();
-    
+    if(todoInput === "")
+    {
+      alert("You must enter something");
+      return;
+    }
+    alert(todoInput)
+    setTodoInput("")
   };
 
 
   return (
     <div className="col-3 todo-create mt-5">
-      <form className="todo-text flex-inline">
+      <form className="todo-text " onSubmit={submitTodo}>
         <input
           type="text"
           placeholder="write something"
@@ -45,7 +51,7 @@ const CreateTodo = () => {
           onChange={handleChange}
         />
         <button
-          type="button"
+          type="submit"
           id="create-todo-btn-id"
           onClick={submitTodo}
           className="btn btn-primary bmd-btn-fab todo-create-pencil-btn"
@@ -60,7 +66,6 @@ const CreateTodo = () => {
           </i>
         </button>
       </form>
-      <span > Is it valisd: {goodInput}</span>
     </div>
   );
 };
