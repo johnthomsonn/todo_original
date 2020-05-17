@@ -4,6 +4,7 @@ images/
 controllers/testcontroller.js
 routes/testroute.js
 validation/testvalidation.js
+*.scss
 
 react-frontend/node_modules/
 
