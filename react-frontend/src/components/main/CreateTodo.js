@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt as pencil} from "@fortawesome/free-solid-svg-icons";
 import  "./CreateTodo.css";
+import {cleanInput} from '../../auth/Auth'
 
 const CreateTodo = () => {
   const [todoInput, setTodoInput] = useState("");
@@ -20,7 +21,7 @@ const CreateTodo = () => {
 
   const validInput = () => {
 
-    if(todoInput == "" || /[\[\]<>^!@\"()#}\/{+\s]/.test(todoInput))
+    if(todoInput == "" || cleanInput(todoInput))
     {
       setGoodInput(false)
     }else
