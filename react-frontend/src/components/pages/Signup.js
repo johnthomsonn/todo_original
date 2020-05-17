@@ -6,17 +6,20 @@ const Signup = () => {
   const [input, setInput] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
+    confirm: ""
   });
+
+  const handleChange = event => {};
 
   const handleSubmit = event => {
     event.preventDefault();
   };
 
   const style = {
-  backgroundImage: `linear-gradient(0deg, #eddf91 2px, rgba(0, 150, 136, 0) 0),
+    backgroundImage: `linear-gradient(0deg, #eddf91 2px, rgba(0, 150, 136, 0) 0),
     linear-gradient(0deg, rgba(0, 0, 0, 0.26) 1px, transparent 0)`
-};
+  };
 
   return (
     <>
@@ -28,8 +31,6 @@ const Signup = () => {
 
         <div className="signup-form-div ">
           <form className="signup-form " onSubmit={handleSubmit}>
-
-
             <div class="form-group">
               <label for="usernameInput" class="bmd-label-floating">
                 Username:
@@ -39,16 +40,24 @@ const Signup = () => {
                 class="form-control"
                 id="usernameInput"
                 name="usernameInput"
+                value={input.username}
                 style={style}
               />
             </div>
 
             <div class="form-group">
-              <label for="emailInput" class="bmd-label-floating" >
+              <label for="emailInput" class="bmd-label-floating">
                 Email:
               </label>
-              <input type="email" class="form-control" id="emailInput" name="emailInput" style={style}/>
-              <span class="bmd-help" style={{color : "yellow"}}>
+              <input
+                type="email"
+                class="form-control"
+                id="emailInput"
+                name="emailInput"
+                value={input.email}
+                style={style}
+              />
+              <span class="bmd-help" style={{color: "yellow"}}>
                 We'll never share your email with anyone else.
               </span>
             </div>
@@ -63,6 +72,7 @@ const Signup = () => {
                 id="passwordInput"
                 name="passwordInput"
                 autocomplete="new-password"
+                value={input.password}
                 style={style}
               />
               <span class="bmd-help">Please use a unique password</span>
@@ -78,9 +88,14 @@ const Signup = () => {
                 id="passwordInputConfirm"
                 name="passwordInputConfirm"
                 autocomplete="new-password"
+                value={input.confirm}
                 style={style}
               />
             </div>
+
+            <button type="submit" class="btn  btn-raised">
+              Sign up
+            </button>
           </form>
         </div>
       </div>
