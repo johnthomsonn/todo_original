@@ -1,9 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import NavBar from "../main/NavBar/NavBar";
 import './Home.css'
 
 import CreateTodo from '../main/CreateTodo'
 const Home = () => {
+
+useEffect( () => {
+  checkCookie();
+}, [])
+
+const checkCookie = () => {
+    const authtoken = document.cookie
+    console.log (" cookies : "  +authtoken)
+}
   return (
     <>
       <NavBar />

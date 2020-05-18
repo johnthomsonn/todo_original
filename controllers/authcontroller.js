@@ -162,6 +162,41 @@ exports.needAuthentication = (req, res, next) => {
   }
 };
 
+exports.isLoggedIn = (req,res) => {
+  const authToken = req.cookies.authtoken;
+  //no auth token
+  if (!authToken) {
+    return res.status(401).json({
+      logged : false
+    });
+  }
+  //else auth token is there so check it is valid
+  else {
+    const payload = jwt.verify(authToken, process.env.JWT_SECRET);
+    //if the secret is wrong
+    if (!payload) {
+      res.clearCookie("authtoken");
+      return res.status(401).json({
+        logged : false
+      });
+    }
+    //else secret is valid so check user exists
+    else {
+      User.findOne({_id: payload._id}).then(user => {
+        if (!user) {
+          return res.status(401).json({
+            logged : false
+          });
+        } else {
+          return res.json({
+            logged : true
+          })
+        }
+      });
+    }
+  }
+}
+
 exports.ensureCorrectUserPerformingAction = (req, res, next) => {
   const loggedUser = req.auth;
   const urlUser = req.user._id;
