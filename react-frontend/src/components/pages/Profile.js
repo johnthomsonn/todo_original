@@ -3,16 +3,28 @@ import NavBar from "../main/NavBar/NavBar";
 
 const Profile = (props) => {
 
-  const [use,setUser] = useState("")
+  const [user,setUser] = useState({})
 
   useEffect(() =>{
     getUserProfile()
   }, [])
 
   const getUserProfile =() =>  {
-    fetch(`http://localhost:5000/users/${props.match.params.username}`);
+    fetch(`http://localhost:5000/users/${props.match.params.username}`)
+      .then(res =>res.json())
+      .then(data => {
+        if(data.error)
+        {
+            setUser({...user, error : data.error})
+        }
+        else
+        {
+          console.log("NO ERROR AND WE HAVE THE PROFILE: "  + data)
+        }
+      })
+      .catch(err => console.log("ERROR: " + err))
 
-    
+
   }
 
   return (
@@ -20,6 +32,15 @@ const Profile = (props) => {
 
     <NavBar />
     {console.log("USER PROFILE FOR: " + props.match.params.username)}
+
+    <div
+      className="alert alert-danger"
+      style={{display: user.error? "" : "none"}}
+    >
+      {user.error}
+    </div>
+
+
     </>
   );
 }
