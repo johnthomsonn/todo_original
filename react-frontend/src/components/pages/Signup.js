@@ -87,7 +87,8 @@ const Signup = () => {
 
   if(input.redirect)
   {
-    return <Redirect to="/" />
+    const  id =window.localStorage.getItem("user")._id;
+    return <Redirect to={`/${id}`} />
   }
 
   const signupForm = () => {

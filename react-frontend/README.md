@@ -1,4 +1,4 @@
 # React front end
 
 ### Todo
--better validation in sign up
+- refactor signup/sign in scss to use mixins

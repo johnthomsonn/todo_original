@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import NavBar from "../main/NavBar/NavBar";
+import {Redirect} from 'react-router-dom'
 import "./Signin.css";
 import {cleanInput, validateEmail} from "../../auth/Auth";
 
@@ -7,9 +8,14 @@ const Signin = () => {
   const [input, setInput] = useState({
     email: "",
     password: "",
-    error: ""
+    error: "",
+    redirect : false
   });
   const [goodInput, setGoodInput] = useState(false);
+
+  useEffect( () => {
+    validateInput();
+  }, [input])
 
   const handleChange = name => event => {
     const userIn = event.target.value;
@@ -30,13 +36,9 @@ const Signin = () => {
   };
 
   const validateInput = () => {
-    const cleanUsername =
-      cleanInput(input.username) && input.username.length > 0;
     setGoodInput(
-      cleanUsername &&
         validateEmail(input.email) &&
-        input.password.length >= 6 &&
-        input.password === input.confirm
+        input.password.length >= 1
     );
   };
 
@@ -48,7 +50,7 @@ const Signin = () => {
 
   const signIn = () => {
     setInput({...input, loading : true})
-    fetch("http://localhost:5000/auth/signup", {
+    fetch("http://localhost:5000/auth/signin", {
       method : "POST",
       mode : 'cors',
       headers :{
@@ -56,7 +58,6 @@ const Signin = () => {
         "Content-Type" : "application/json"
       },
       body : JSON.stringify({
-        username : input.username,
         email : input.email,
         password : input.password
       })
@@ -77,7 +78,13 @@ const Signin = () => {
       }
     }
   }).catch(err => console.log(err))
-  setInput({...input, loading : false})
+
+  }
+
+  if(input.redirect)
+  {
+    const userObj = JSON.parse(window.localStorage.getItem("user"));
+    return <Redirect to={`/${userObj.username}`} />
   }
 
   return (
