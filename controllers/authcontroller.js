@@ -132,7 +132,7 @@ exports.needAuthentication = (req, res, next) => {
   if (!authToken) {
     return res.status(401).json({
       status: false,
-      error: "You are not authorised to perform this action."
+      error: "You are not authorised to perform this action. No auth cookie"
     });
   }
   //else auth token is there so check it is valid
@@ -143,7 +143,7 @@ exports.needAuthentication = (req, res, next) => {
       res.clearCookie("authtoken");
       return res.status(401).json({
         status: false,
-        error: "You are not authorised to perform this action"
+        error: "You are not authorised to perform this action. Payload could not be verified"
       });
     }
     //else secret is valid so check user exists
