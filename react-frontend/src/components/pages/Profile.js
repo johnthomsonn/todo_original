@@ -30,7 +30,7 @@ const Profile = (props) => {
   return (
     <>
 
-    <NavBar />
+    <NavBar history={props.history}/>
     {console.log("USER PROFILE FOR: " + props.match.params.username)}
 
     <div

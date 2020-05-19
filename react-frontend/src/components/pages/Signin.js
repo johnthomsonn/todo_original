@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 import "./Signin.css";
 import {cleanInput, validateEmail} from "../../auth/Auth";
 
-const Signin = () => {
+const Signin = (props) => {
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -89,7 +89,7 @@ const Signin = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar history={props.history}/>
 
       <div className="container sign-in-container">
         <div className="header">

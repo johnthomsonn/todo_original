@@ -4,7 +4,7 @@ import NavBar from "../main/NavBar/NavBar";
 import "./Signup.css";
 import {cleanInput, validateEmail} from '../../auth/Auth'
 
-const Signup = () => {
+const Signup = (props) => {
   const [input, setInput] = useState({
     username: "",
     email: "",
@@ -179,7 +179,7 @@ const Signup = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar history={props.history}/>
       <div className="container sign-up-container">
         <div className="header">
           <h1>Sign Up</h1>

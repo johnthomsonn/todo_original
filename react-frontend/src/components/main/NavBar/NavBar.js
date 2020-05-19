@@ -3,7 +3,7 @@ import "./NavBar.css";
 import {Link, withRouter} from "react-router-dom";
 import {isLoggedIn, signout,isLoggedInBasic} from "../../../auth/Auth";
 
-const NavBar = ({history}) => {
+const NavBar = (props) => {
 
 let logged= false;
 
@@ -43,7 +43,7 @@ let logged= false;
 
           {isLoggedInBasic() ? (<>
           <li className="nav-item">
-            <button className="nav-link" onClick={() => signout()}>
+            <button className="nav-link" onClick={() => signout(() => props.history.push("/"))}>
               Sign out
             </button>
           </li>

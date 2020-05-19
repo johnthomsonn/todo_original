@@ -27,12 +27,12 @@ export const isLoggedInBasic = () => {
   return isOnline
 }
 
-export const signout = ()=> {
+export const signout = (next)=> {
   if (typeof window !== "undefined") {
     window.localStorage.removeItem("user");
     window.localStorage.removeItem("status");
   }
-
+  next()
   return fetch("http://localhost:5000/auth/signout")
     .then(response => response.json())
     .catch(err => console.log(err));
