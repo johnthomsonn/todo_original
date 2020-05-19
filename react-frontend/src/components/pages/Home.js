@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import NavBar from "../main/NavBar/NavBar";
 import './Home.css'
-
 import CreateTodo from '../main/CreateTodo'
+
 const Home = () => {
 
 useEffect( () => {
@@ -11,7 +11,6 @@ useEffect( () => {
 
 const checkCookie = () => {
     const authtoken = document.cookie
-    console.log (" cookies : "  +authtoken)
 }
   return (
     <>

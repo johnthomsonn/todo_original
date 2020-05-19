@@ -48,7 +48,7 @@ exports.signup = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      expires: 0
+      expires: 0,
     };
 
     res.cookie("authtoken", token, cookieOptions);
@@ -110,6 +110,7 @@ exports.signin = async (req, res) => {
 
 exports.signout = (req, res) => {
   res.clearCookie("authtoken");
+  res.clearCookie("testCookie");
   const isDeleted = req.query.user;
   if (isDeleted === "deleted") {
     return res.json({
@@ -166,7 +167,7 @@ exports.isLoggedIn = (req,res) => {
   const authToken = req.cookies.authtoken;
   //no auth token
   if (!authToken) {
-    return res.status(401).json({
+    return res.status(404).json({
       logged : false
     });
   }
@@ -176,7 +177,7 @@ exports.isLoggedIn = (req,res) => {
     //if the secret is wrong
     if (!payload) {
       res.clearCookie("authtoken");
-      return res.status(401).json({
+      return res.status(404).json({
         logged : false
       });
     }
@@ -184,7 +185,7 @@ exports.isLoggedIn = (req,res) => {
     else {
       User.findOne({_id: payload._id}).then(user => {
         if (!user) {
-          return res.status(401).json({
+          return res.status(404).json({
             logged : false
           });
         } else {

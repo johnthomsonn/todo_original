@@ -1,10 +1,11 @@
 import React from "react";
-import "./NavBar.css"
-import {Link} from 'react-router-dom'
+import "./NavBar.css";
+import {Link, withRouter} from "react-router-dom";
+import {isLoggedIn, signout,isLoggedInBasic} from "../../../auth/Auth";
 
-const NavBar = (props) => {
+const NavBar = ({history}) => {
 
-
+let logged= false;
 
   return (
     <nav className="navbar navbar-expand-md">
@@ -32,18 +33,34 @@ const NavBar = (props) => {
             </a>
           </div>
         </li>
-        </ul>
-        <ul className="ml-auto nav nav-pills">
+      </ul>
+
+      <ul className="ml-auto nav nav-pills">
+
+        {console.log(isLoggedInBasic())}
+
+
+
+          {isLoggedInBasic() ? (<>
           <li className="nav-item">
-            <Link className="nav-link" to={"/signup"}>
-              Sign up
-            </Link>
+            <button className="nav-link" onClick={() => signout()}>
+              Sign out
+            </button>
           </li>
-          <li className="nav-item justify-content-end">
-            <Link className="nav-link" to={"/signin"}>
-              Sign in
-            </Link>
-          </li>
+        </>) : (
+          <>
+            <li className="nav-item">
+              <Link className="nav-link" to={"/signup"}>
+                Sign up
+              </Link>
+            </li>
+            <li className="nav-item justify-content-end">
+              <Link className="nav-link" to={"/signin"}>
+                Sign in
+              </Link>
+            </li>
+          </>
+        )  }
       </ul>
     </nav>
   );

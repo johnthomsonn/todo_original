@@ -8,7 +8,7 @@ const MainRouter = () => {
   return (
     <div>
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact  component={Home} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/" component={Error404} />
       </Switch>
