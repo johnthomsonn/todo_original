@@ -6,6 +6,7 @@ const {needAuthentication,ensureCorrectUserPerformingAction} = require('../contr
 
 router.get("/", getAllUsers);
 router.delete("/:username", ensureCorrectUserPerformingAction, deleteUser) //require sign in
+router.get("/:username", ensureCorrectUserPerformingAction, (req,res) => res.json(req.user))
 
 router.param("username", getUserByUsernameParam);
 
