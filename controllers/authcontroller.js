@@ -110,8 +110,8 @@ exports.signin = async (req, res) => {
 };
 
 exports.signout = (req, res) => {
-  res.clearCookie("authtoken");
-  res.clearCookie("testCookie");
+  //res.clearCookie("authtoken");
+  res.cookie("authtoken", "", {maxAge :0})
   const isDeleted = req.query.user;
   if (isDeleted === "deleted") {
     return res.json({
