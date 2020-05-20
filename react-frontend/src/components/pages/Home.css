@@ -1,0 +1,50 @@
+.container-fluid {
+  font-family: "Balsamiq Sans", cursive;
+}
+
+#header {
+  margin-left: 5%;
+  background-color: inherit;
+  height: 300px;
+  margin-right: 5%;
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 3%;
+}
+#header .header-title {
+  font-size: 7rem;
+}
+#header .header-sub-title {
+  font-size: 2rem;
+  margin-top: -1%;
+}
+#header .tick:hover {
+  color: green;
+}
+
+#main {
+  margin-left: 5%;
+  background-color: inherit;
+  height: 400px;
+  margin-right: 5%;
+  padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.3rem;
+  line-height: 2.5;
+  margin-top: -2%;
+}
+#main li:hover {
+  cursor: pointer;
+}
+
+.checked {
+  text-decoration: line-through;
+}
+
+/*# sourceMappingURL=Home.css.map */
