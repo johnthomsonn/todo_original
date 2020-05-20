@@ -17,3 +17,5 @@ nav {
   color:black;
   font-weight:700
 }
+
+a:hover {cursor: pointer;}

@@ -18,7 +18,12 @@ useEffect(() => {
             Home
           </Link>
         </li>
-        {isLogged && (<li className="nav-item dropdown">
+        {isLogged && (<>
+          <li className="nav-item">
+          <Link className="nav-link" to={`/${JSON.parse(window.localStorage.getItem("user")).username}`}>
+            Profile
+          </Link>
+        </li><li className="nav-item dropdown">
           <a
             className="nav-link dropdown-toggle"
             data-toggle="dropdown"
@@ -34,7 +39,7 @@ useEffect(() => {
               Home
             </a>
           </div>
-        </li>)}
+        </li></>)}
 
       </ul>
 
@@ -44,10 +49,11 @@ useEffect(() => {
 
 
           {isLogged ? (<>
+
           <li className="nav-item">
-            <button className="nav-link"  onClick={() => signout(() => props.history.push("/"))}>
+            <a className="nav-link"  onClick={() => signout(() => props.history.push("/"))}>
               Sign out
-            </button>
+            </a>
           </li>
         </>) : (
           <>
