@@ -92,17 +92,18 @@ exports.signin = async (req, res) => {
       const cookieOptions = {
         httpOnly: true,
         expires: 0,
-        sameSite : 'none'
+        sameSite : 'Strict'
       };
       res.cookie("authtoken", token, cookieOptions);
-      const {_id, username, email, created} = foundUser;
+      const {_id, username, email, created,lists} = foundUser;
       return res.status(200).json({
         status: true,
         user: {
           _id,
           username,
           email,
-          created
+          created,
+          lists
         }
       });
     }
@@ -110,7 +111,6 @@ exports.signin = async (req, res) => {
 };
 
 exports.signout = (req, res) => {
-  //res.clearCookie("authtoken");
   res.cookie("authtoken", "", {maxAge :0})
   const isDeleted = req.query.user;
   if (isDeleted === "deleted") {
