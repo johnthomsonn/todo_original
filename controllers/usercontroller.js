@@ -74,3 +74,16 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+exports.getUserProfile = (req,res) =>{
+  const {_id,username,email,created} = req.user
+  return res.json({
+    status : true,
+    user : {
+      _id,
+      username,
+      email,
+      created,
+    }
+  })
+}
