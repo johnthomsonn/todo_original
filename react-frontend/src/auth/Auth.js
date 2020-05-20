@@ -33,7 +33,10 @@ export const signout = (next)=> {
     window.localStorage.removeItem("status");
   }
   next()
-  return fetch("http://localhost:5000/auth/signout")
+  return fetch("http://localhost:5000/auth/signout", {
+    credentials :'include',
+    mode : 'cors'
+  })
     .then(response => response.json())
     .catch(err => console.log(err));
 };
