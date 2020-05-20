@@ -110,7 +110,7 @@ useEffect(() => {
 
   return (
     <>
-      <NavBar history={props.history}/>
+      <NavBar history={props.history} />
 
       <div className="container sign-in-container">
         <div className="header">

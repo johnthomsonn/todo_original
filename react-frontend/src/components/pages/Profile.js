@@ -10,12 +10,47 @@ const Profile = (props) => {
     username : "",
     email : "",
     created: "",
-    redirect : false
+    redirect : false,
+    lists :[]
+  })
+
+  const [list, setList] = useState({
+    name : "",
+    items : []
   })
 
   useEffect(() =>{
     getUserProfile()
   }, [])
+
+  useEffect(() =>{
+    tryGetList();
+  }, [props.match.params.list])
+
+  const tryGetList = () => {
+    if(props.match.params.list)
+      getList();
+  }
+
+  const getList = async () => {
+    try{
+      const fetchResponse = await fetch(`http://localhost:5000/users/${user.username}/${props.match.params.list}`,{
+        method : "GET",
+        mode :"cors",
+        credentials : 'include',
+        headers : { Accept : "application/json"}
+      })
+
+      const data = await fetchResponse.json();
+      console.log(data);
+      setList(data)
+    }
+    catch(err)
+    {
+      alert("Error when fetching the list")
+    }
+  }
+
 
   const getUserProfile =() =>  {
     fetch(`http://localhost:5000/users/${props.match.params.username}`,{
@@ -52,7 +87,7 @@ const Profile = (props) => {
   return (
     <>
 
-    <NavBar history={props.history}/>
+    <NavBar history={props.history} lists={user.lists}/>
 
     <div
       className="alert alert-danger"
