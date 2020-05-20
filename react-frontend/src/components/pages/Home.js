@@ -9,24 +9,14 @@ useEffect( () => {
   checkCookie();
 }, [])
 
-const getCookie = async () => {
-  fetch("http://localhost:5000/test/cookie",{
-    credentials : 'include'
-  })
-  .then(res => res.json())
-  .then(data => console.log(data))
-  .catch(err => console.log(err))
-}
-
-const clearCookie = () => {
-  fetch("http://localhost:5000/test/clr")
-  .then(res => res.json())
-  .then(data => console.log(data))
-  .catch(err => console.log(err))
-}
 
 const checkCookie = () => {
     const authtoken = document.cookie
+}
+
+if(props.match.params.error != null)
+{
+  console.log("ERRORORORORORORO")
 }
   return (
     <>
@@ -37,9 +27,6 @@ const checkCookie = () => {
           <CreateTodo />
         </div>
 
-        <button onClick={() => getCookie()} > Get cookie </button>
-
-        <button onClick={() => clearCookie()} > clear cookie </button>
 
 
 

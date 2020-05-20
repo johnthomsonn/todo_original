@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import NavBar from "../main/NavBar/NavBar";
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import "./Signin.css";
 import {cleanInput, validateEmail} from "../../auth/Auth";
 
@@ -9,13 +9,31 @@ const Signin = (props) => {
     email: "",
     password: "",
     error: "",
-    redirect : false
+    redirect : false,
+    redirectError : ""
   });
   const [goodInput, setGoodInput] = useState(false);
+
+useEffect(() => {
+  checkForRedirectError()
+}, [])
 
   useEffect( () => {
     validateInput();
   }, [input])
+
+  const checkForRedirectError = () => {
+    if(props.location)
+    {
+      if(props.location.state)
+      {
+        if(props.location.state.redirectError){
+          setInput({...input, redirectError : props.location.state.redirectError})
+        }
+      }
+
+    }
+  }
 
   const handleChange = name => event => {
     const userIn = event.target.value;
@@ -88,6 +106,8 @@ const Signin = (props) => {
     return <Redirect to={`/${userObj.username}`} />
   }
 
+
+
   return (
     <>
       <NavBar history={props.history}/>
@@ -102,6 +122,14 @@ const Signin = (props) => {
           style={{display: input.error.length ? "" : "none"}}
         >
           {input.error}
+        </div>
+
+        <div
+          className="alert alert-danger"
+          style={{display: input.redirectError.length > 1 ? "" : "none"}}
+        >
+          {input.redirectError}. Please do so below or {<Link to="/signup"> sign up </Link>}
+
         </div>
 
         <div className="signin-form-div">

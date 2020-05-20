@@ -1,9 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from "../main/NavBar/NavBar";
+import {Redirect} from 'react-router-dom'
 
 const Profile = (props) => {
 
-  const [user,setUser] = useState({})
+  const [user,setUser] = useState({
+    status: "",
+    id : "",
+    username : "",
+    email : "",
+    created: "",
+    redirect : false
+  })
 
   useEffect(() =>{
     getUserProfile()
@@ -22,23 +30,29 @@ const Profile = (props) => {
       .then(data => {
         if(data.error)
         {
-            setUser({...user, error : data.error})
+            setUser({...user, redirect : true})
         }
         else
         {
-          console.log("NO ERROR AND WE HAVE THE PROFILE: "  + data)
+          console.log("we have the data")
+          console.log(data)
+          setUser({...user,
+            username : data.username
+          })
         }
       })
       .catch(err => console.log("ERROR: " + err))
+  }
 
-
+  if(user.redirect)
+  {
+    return <Redirect to={"/?error=notlogged"} />
   }
 
   return (
     <>
 
     <NavBar history={props.history}/>
-    {console.log("USER PROFILE FOR: " + props.match.params.username)}
 
     <div
       className="alert alert-danger"
