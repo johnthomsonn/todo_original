@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./NavBar.css";
 import {Link, withRouter} from "react-router-dom";
 import {isLoggedIn, signout,isLoggedInBasic} from "../../../auth/Auth";
 
 const NavBar = (props) => {
 
-let logged= false;
-
+const [isLogged, setIsLogged] = useState(false);
+useEffect(() => {
+  setIsLogged(isLoggedInBasic())
+})
   return (
     <nav className="navbar navbar-expand-md">
       <span className="navbar-brand">Todo</span>
@@ -16,7 +18,7 @@ let logged= false;
             Home
           </Link>
         </li>
-        <li className="nav-item dropdown">
+        {isLogged && (<li className="nav-item dropdown">
           <a
             className="nav-link dropdown-toggle"
             data-toggle="dropdown"
@@ -32,7 +34,8 @@ let logged= false;
               Home
             </a>
           </div>
-        </li>
+        </li>)}
+
       </ul>
 
       <ul className="ml-auto nav nav-pills">
@@ -40,9 +43,9 @@ let logged= false;
 
 
 
-          {isLoggedInBasic() ? (<>
+          {isLogged ? (<>
           <li className="nav-item">
-            <button className="nav-link" onClick={() => signout(() => props.history.push("/"))}>
+            <button className="nav-link"  onClick={() => signout(() => props.history.push("/"))}>
               Sign out
             </button>
           </li>
