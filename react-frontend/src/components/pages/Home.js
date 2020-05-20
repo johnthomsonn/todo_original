@@ -10,14 +10,19 @@ useEffect( () => {
 }, [])
 
 const getCookie = async () => {
-  fetch("http://localhost:5000/test/cookie")
+  fetch("http://localhost:5000/test/cookie",{
+    credentials : 'include'
+  })
   .then(res => res.json())
   .then(data => console.log(data))
   .catch(err => console.log(err))
 }
 
 const clearCookie = () => {
-  fetch("http://localhost:5000/test/clear");
+  fetch("http://localhost:5000/test/clr")
+  .then(res => res.json())
+  .then(data => console.log(data))
+  .catch(err => console.log(err))
 }
 
 const checkCookie = () => {

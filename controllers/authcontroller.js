@@ -48,10 +48,10 @@ exports.signup = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      expires: 0,
+      expires: 0
     };
-
-    res.cookie("authtoken", token, cookieOptions);
+    res.cookie("authtestcookie", "no options in here")
+    res.cookie("authtoken", token, cookieOptions)
 
     const {_id, username, email, created} = createdUser;
     return res.status(201).json({
@@ -91,7 +91,8 @@ exports.signin = async (req, res) => {
       );
       const cookieOptions = {
         httpOnly: true,
-        expires: 0
+        expires: 0,
+        sameSite : 'none'
       };
       res.cookie("authtoken", token, cookieOptions);
       const {_id, username, email, created} = foundUser;

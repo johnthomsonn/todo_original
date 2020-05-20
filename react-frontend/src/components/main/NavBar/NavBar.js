@@ -37,7 +37,6 @@ let logged= false;
 
       <ul className="ml-auto nav nav-pills">
 
-        {console.log(isLoggedInBasic())}
 
 
 

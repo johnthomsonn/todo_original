@@ -10,7 +10,14 @@ const Profile = (props) => {
   }, [])
 
   const getUserProfile =() =>  {
-    fetch(`http://localhost:5000/users/${props.match.params.username}`)
+    fetch(`http://localhost:5000/users/${props.match.params.username}`,{
+      method : "GET",
+      mode : 'cors',
+      credentials : 'include',
+      headers :{
+        Accept : "application/json"
+      }
+    })
       .then(res =>res.json())
       .then(data => {
         if(data.error)

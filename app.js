@@ -27,7 +27,11 @@ app.use(express.json())
 app.use(bodyParser.json());
 app.use(expressValidator());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin : true,
+  credentials : true
+}));
+app.options('*', cors())
 
 // Database connection
 mongoose.connect(process.env.DB_URL, {
