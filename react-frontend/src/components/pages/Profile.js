@@ -89,7 +89,7 @@ const Profile = (props) => {
   }
 
   return (
-    <>
+    <div className="profile-info-container">
 
     <NavBar history={props.history} lists={user.lists}/>
 
@@ -99,14 +99,13 @@ const Profile = (props) => {
     >
       {user.error}
     </div>
-    {user.username}
-    <ProfileInfo username={user.username} test="testObj" />
+    <ProfileInfo user={user}  />
 
 
 
 
 
-    </>
+    </div>
   );
 }
 

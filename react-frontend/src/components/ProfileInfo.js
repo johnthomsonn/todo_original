@@ -7,15 +7,16 @@ return (<>
 
  <div className="profile-info-box">
 
- {props.test}
-    <p>
-    {props.username}
+    <p className="info">
+    {props.user.username}
     </p>
 
-    <p>
+    <p className="info">
+    {props.user.email}
     </p>
 
-    <p>
+    <p className="info">
+    {new Date(props.user.created).toLocaleDateString()}
     </p>
  </div>
 
