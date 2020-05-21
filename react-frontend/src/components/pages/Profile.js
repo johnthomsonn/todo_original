@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import NavBar from "../main/NavBar/NavBar";
 import {Redirect} from 'react-router-dom'
+import ProfileInfo from '../ProfileInfo'
 
 const Profile = (props) => {
 
@@ -72,7 +73,10 @@ const Profile = (props) => {
           console.log("we have the data")
           console.log(data)
           setUser({...user,
-            username : data.username
+            username : data.user.username,
+            id : data.user._id,
+            email : data.user.email,
+            created : data.user.created
           })
         }
       })
@@ -95,6 +99,11 @@ const Profile = (props) => {
     >
       {user.error}
     </div>
+    {user.username}
+    <ProfileInfo username={user.username} test="testObj" />
+
+
+
 
 
     </>
