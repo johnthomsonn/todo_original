@@ -1,7 +1,7 @@
 .create-list {
   padding: 2%;
-  width: 22%;
-  height: 350px;
+  margin-top: 20px;
+  min-height: 250px;
   background-color: white;
   margin: 2% 0 0 5%;
   line-height: 2;
@@ -11,18 +11,19 @@
 }
 .create-list h4 {
   text-decoration: underline;
+  margin-top: 5%;
 }
 
 .create-form {
-  margin-top: 6%;
+  margin-top: 10%;
 }
 .create-form input {
   padding-left: 3%;
-  width: 100%;
+  width: 80%;
 }
 .create-form button {
   margin-top: 5%;
-  width: 100%;
+  width: 80%;
   height: 50px;
   background-color: #eddf91;
 }
