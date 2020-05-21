@@ -42,6 +42,8 @@ const CreateList = props => {
             Create List
           </button>
         </form>
+
+
       </>
     );
   };
@@ -52,7 +54,7 @@ const CreateList = props => {
 
       <div
         className="alert alert-danger"
-        style={{display: invalid.length > 0 ? "" : "none", fontSize : "0.8rem"}}
+        style={{display: invalid.length > 0 ? "" : "none", fontSize : "0.9rem"}}
       >
       List name cannot contain {invalid}
       </div>
