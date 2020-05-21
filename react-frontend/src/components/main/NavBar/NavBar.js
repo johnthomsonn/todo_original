@@ -20,7 +20,7 @@ useEffect(() => {
         </li>
         {isLogged && (<>
           <li className="nav-item">
-          <Link className="nav-link" to={`/${JSON.parse(window.localStorage.getItem("user")).username}`}>
+          <Link className="nav-link" to={`/${JSON.parse(window.sessionStorage.getItem("user")).username}`}>
             Profile
           </Link>
         </li><li className="nav-item dropdown">

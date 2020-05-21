@@ -22,15 +22,15 @@ export const isLoggedInBasic = () => {
   let isOnline = false;
   if(typeof window !== "undefined")
   {
-    isOnline = window.localStorage.getItem("status")
+    isOnline = window.sessionStorage.getItem("status")
   }
   return isOnline
 }
 
 export const signout = (next)=> {
   if (typeof window !== "undefined") {
-    window.localStorage.removeItem("user");
-    window.localStorage.removeItem("status");
+    window.sessionStorage.removeItem("user");
+    window.sessionStorage.removeItem("status");
   }
   next()
   return fetch("http://localhost:5000/auth/signout", {
