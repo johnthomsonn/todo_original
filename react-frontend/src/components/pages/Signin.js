@@ -91,8 +91,8 @@ useEffect(() => {
     else
     {
       if(typeof window !== "undefined"){
-        window.localStorage.setItem("user", JSON.stringify(data.user))
-        window.localStorage.setItem("status" , data.status)
+        window.sessionStorage.setItem("user", JSON.stringify(data.user))
+        window.sessionStorage.setItem("status" , data.status)
         setInput({...input, redirect : true})
       }
     }
@@ -102,7 +102,7 @@ useEffect(() => {
 
   if(input.redirect)
   {
-    const userObj = JSON.parse(window.localStorage.getItem("user"));
+    const userObj = JSON.parse(window.sessionStorage.getItem("user"));
     return <Redirect to={`/${userObj.username}`} />
   }
 

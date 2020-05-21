@@ -64,8 +64,8 @@ const Signup = (props) => {
     else
     {
       if(typeof window !== "undefined"){
-        window.localStorage.setItem("user", JSON.stringify(data.user))
-        window.localStorage.setItem("status" , data.status)
+        window.sessionStorage.setItem("user", JSON.stringify(data.user))
+        window.sessionStorage.setItem("status" , data.status)
         setInput({...input, redirect : true})
       }
     }
@@ -87,7 +87,7 @@ const Signup = (props) => {
 
   if(input.redirect)
   {
-    const  id =window.localStorage.getItem("user")._id;
+    const  id =window.sessionStorage.getItem("user")._id;
     return <Redirect to={`/${id}`} />
   }
 
