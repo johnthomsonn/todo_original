@@ -1,0 +1,31 @@
+.create-list {
+  padding: 2%;
+  width: 20%;
+  height: 350px;
+  background-color: white;
+  margin: 2% 0 0 5%;
+  line-height: 2;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 1.3rem;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.create-form {
+  margin-top: 6%;
+}
+.create-form input {
+  padding-left: 3%;
+  width: 100%;
+}
+.create-form button {
+  margin-top: 5%;
+  width: 100%;
+  height: 50px;
+  background-color: #eddf91;
+}
+.create-form button:hover {
+  background-color: #c9bd7b;
+}
+
+/*# sourceMappingURL=CreateList.css.map */

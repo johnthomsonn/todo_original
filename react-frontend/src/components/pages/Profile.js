@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import NavBar from "../main/NavBar/NavBar";
 import {Redirect} from 'react-router-dom'
 import ProfileInfo from '../ProfileInfo'
+import CreateList from '../CreateList'
 
 const Profile = (props) => {
 
@@ -101,7 +102,7 @@ const Profile = (props) => {
     </div>
     <ProfileInfo user={user}  />
 
-
+    <CreateList user={user} />
 
 
 
