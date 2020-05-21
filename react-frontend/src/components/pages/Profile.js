@@ -108,7 +108,7 @@ const Profile = (props) => {
       <ProfileInfo user={user}  />
       <CreateList user={user} />
 </div>
-<div className="col-md-9">
+<div className="col-md-8">
       <ProfileShowLists />
 </div>
       </div>

@@ -1,0 +1,17 @@
+.show-lists-container {
+  margin: 2% 0 0 5%;
+  background-color: white;
+  padding: 3%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  min-height: 556.5px;
+}
+.show-lists-container h3 {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.show-lists {
+  margin-top: 4%;
+}
+
+/*# sourceMappingURL=ProfileShowLists.css.map */
