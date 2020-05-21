@@ -16,6 +16,12 @@ const ProfileInfo = props => {
       <p className="info">
       {new Date(props.user.created).toLocaleDateString()}
       </p>
+
+      <p className="info">
+      {
+          props.user.lists.length === 1 ? `${props.user.lists.length} list` : `${props.user.lists.length} lists`
+      }
+      </p>
       </>);
   }
 
