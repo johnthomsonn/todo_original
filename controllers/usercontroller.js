@@ -76,7 +76,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 exports.getUserProfile = (req,res) =>{
-  const {_id,username,email,created} = req.user
+  const {_id,username,email,created, lists} = req.user
   return res.json({
     status : true,
     user : {
@@ -84,6 +84,7 @@ exports.getUserProfile = (req,res) =>{
       username,
       email,
       created,
+      lists 
     }
   })
 }
