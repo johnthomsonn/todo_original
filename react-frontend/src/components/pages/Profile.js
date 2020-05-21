@@ -3,6 +3,7 @@ import NavBar from "../main/NavBar/NavBar";
 import {Redirect} from 'react-router-dom'
 import ProfileInfo from '../ProfileInfo'
 import CreateList from '../CreateList'
+import ProfileShowLists from '../ProfileShowLists'
 
 const Profile = (props) => {
 
@@ -90,7 +91,7 @@ const Profile = (props) => {
   }
 
   return (
-    <div className="profile-info-container">
+    <div className="profile-info-container ">
 
     <NavBar history={props.history} lists={user.lists}/>
 
@@ -100,9 +101,17 @@ const Profile = (props) => {
     >
       {user.error}
     </div>
-    <ProfileInfo user={user}  />
 
-    <CreateList user={user} />
+    <div className="row">
+
+    <div className="col-md-3">
+      <ProfileInfo user={user}  />
+      <CreateList user={user} />
+</div>
+<div className="col-md-9">
+      <ProfileShowLists />
+</div>
+      </div>
 
 
 
