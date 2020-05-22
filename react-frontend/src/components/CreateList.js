@@ -1,14 +1,52 @@
 import React, {useState} from "react";
 import "./CreateList.css";
+import {Redirect} from 'react-router-dom'
 
 const CreateList = props => {
   const [listName, setListName] = useState("");
   const [invalid, setInvalid] = useState([]);
+  const [message, setMessage] = useState("")
+  const [error, setError] = useState("")
+  const [redirect, setRedirect] = useState(false)
 
-  const onFormSubmit = evt => {
+  const onFormSubmit = async evt => {
     evt.preventDefault();
-    alert("clicked")
+
+try {
+  const username = JSON.parse(window.sessionStorage.getItem('user')).username
+    const fetchResponse = await fetch(`http://localhost:5000/users/${username}/lists`, {
+      method : "POST",
+      mode : "cors",
+      credentials : "include",
+      body: JSON.stringify({name : listName}),
+      headers : {
+        Accept : "application/json",
+        "Content-Type" : "application/json"
+      }
+    })
+
+    const dataJson = await fetchResponse.json()
+    // list could not be created
+    if(dataJson.error)
+    {
+      setError(dataJson.error)
+    }
+    //list was created
+    else
+    {
+      props.setLists(dataJson.list)
+      setMessage(dataJson.message)
+      setRedirect(true)
+    }
+  }
+  catch(err)
+  {
+    console.log("Error when trying to create a list : " + err)
+  }
+
   };
+
+
 
   const handleChange = event => {
     const name = event.target.value;
@@ -18,6 +56,8 @@ const CreateList = props => {
     } else {
       setInvalid([]);
     }
+    setError("")
+    setMessage("")
     setListName(event.target.value);
   };
 
@@ -48,15 +88,33 @@ const CreateList = props => {
     );
   };
 
+  if(redirect)
+  {
+    return <Redirect to={`/${props.user.username}/${listName}`} />
+  }
+
   return (
     <div className="create-list">
       {props.user.username != "" && showCreateList()}
+
+      <div
+        className="alert alert-success"
+        style={{display: (message && message.length > 0) ? "" : "none", fontSize : "0.9rem"}}
+      >
+      {message}
+      </div>
 
       <div
         className="alert alert-danger"
         style={{display: invalid.length > 0 ? "" : "none", fontSize : "0.9rem"}}
       >
       List name cannot contain {invalid}
+      </div>
+      <div
+        className="alert alert-danger"
+        style={{display: error.length > 0 ? "" : "none", fontSize : "0.9rem"}}
+      >
+      {error}
       </div>
 
     </div>
