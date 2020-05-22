@@ -24,15 +24,22 @@ const Profile = (props) => {
 
   useEffect(() =>{
     getUserProfile()
-  }, [])
+  },[])
 
   useEffect(() =>{
     tryGetList();
-  }, [props.match.params.list])
+  }, [props.match.params.listm, list])
 
   const tryGetList = () => {
     if(props.match.params.list)
       getList();
+  }
+
+  const setNewList = (list) => {
+    setList(list)
+    let l = user.lists
+    l.push(list)
+    setUser({...user, lists : l})
   }
 
   const getList = async () => {
@@ -56,6 +63,7 @@ const Profile = (props) => {
 
 
   const getUserProfile =() =>  {
+    console.log("getUserProfile username param: ",props.match.params.username)
     fetch(`http://localhost:5000/users/${props.match.params.username}`,{
       method : "GET",
       mode : 'cors',
@@ -78,7 +86,8 @@ const Profile = (props) => {
             username : data.user.username,
             id : data.user._id,
             email : data.user.email,
-            created : data.user.created
+            created : data.user.created,
+            lists: data.user.lists
           })
         }
       })
@@ -106,7 +115,7 @@ const Profile = (props) => {
 
     <div className="col-md-3">
       <ProfileInfo user={user}  />
-      <CreateList user={user} />
+      <CreateList user={user} setLists={setNewList}/>
 </div>
 <div className="col-md-8">
       <ProfileShowLists />
