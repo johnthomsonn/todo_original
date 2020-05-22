@@ -12,3 +12,6 @@
 
 #### NavBar
   - use local storage to set list name dropdown menu to link to
+
+
+### Bugs
