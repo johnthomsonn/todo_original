@@ -26,7 +26,7 @@ exports.getUserByUsernameParam = (req, res, next, username) => {
   User.findOne({username: lowerCaseUsername}, (err, user) => {
     if (err || !user) {
       return res.status(400).json({
-        status,
+        status : false,
         error: "Could not get user by username parameter"
       });
     } else {
@@ -84,7 +84,7 @@ exports.getUserProfile = (req,res) =>{
       username,
       email,
       created,
-      lists 
+      lists
     }
   })
 }
