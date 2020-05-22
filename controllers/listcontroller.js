@@ -73,8 +73,8 @@ exports.createList = async (req, res) => {
       user.hashed_password = undefined;
       return res.json({
         status: true,
-        message: "List created successfully",
-        user: user
+        message: `${list.name} list created successfully`,
+        list
       });
     } else {
       return res.status(400).json({

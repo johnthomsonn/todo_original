@@ -48,9 +48,9 @@ exports.signup = async (req, res) => {
 
     const cookieOptions = {
       httpOnly: true,
-      expires: 0
+      expires: 0,
+      sameSite : "Strict"
     };
-    res.cookie("authtestcookie", "no options in here")
     res.cookie("authtoken", token, cookieOptions)
 
     const {_id, username, email, created} = createdUser;
