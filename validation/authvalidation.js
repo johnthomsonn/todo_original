@@ -14,8 +14,8 @@ exports.getSignupErrors = [
   check("username", "username is required")
     .not()
     .isEmpty()
-    .custom(value => !/\s/.test(value))
-    .withMessage("username cannot contain spaces")
+    .custom(value => !/[<\s:@[\]/>\\'"!]/.test(value))
+    .withMessage("username cannot contain spaces or special characters")
     .trim()
     .escape(),
 
