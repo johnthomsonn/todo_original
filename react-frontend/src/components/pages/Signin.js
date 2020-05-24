@@ -136,7 +136,7 @@ useEffect(() => {
           <form className="signin-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="emailInput" className="bmd-label-floating">
-                Email:
+                Email or username:
               </label>
               <input
                 type="text"
