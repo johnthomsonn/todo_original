@@ -55,7 +55,7 @@ useEffect(() => {
 
   const validateInput = () => {
     setGoodInput(
-        validateEmail(input.email) &&
+        input.email.length >=4 &&
         input.password.length >= 1
     );
   };
@@ -139,7 +139,7 @@ useEffect(() => {
                 Email:
               </label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 id="emailInput"
                 name="emailInput"

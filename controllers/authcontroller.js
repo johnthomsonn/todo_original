@@ -67,7 +67,17 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = async (req, res) => {
-  let foundUser = await User.findOne({email: req.body.email});
+  let foundUser = undefined;
+
+  if(/@/.test(req.body.email))
+  {
+    foundUser = await User.findOne({email: req.body.email});
+  }
+  else
+  {
+    foundUser = await User.findOne({username : req.body.email})
+  }
+
   if (!foundUser) {
     return res.status(404).json({
       status: false,

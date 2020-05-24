@@ -32,11 +32,9 @@ exports.getSignupErrors = [
 ];
 
 exports.getSignInErrors = ([
-  check("email", "A valid email is required")
+  check("email", "Must be filled in")
     .not()
-    .isEmpty()
-    .isEmail()
-    .normalizeEmail(),
+    .isEmpty(),
   check("password", "A password is required")
     .not()
     .isEmpty()
