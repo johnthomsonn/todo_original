@@ -21,6 +21,24 @@ exports.getListByListName = (req, res, next, listName) => {
   }).populate("items", "content completed");
 };
 
+exports.getListByListId = (req,res) => {
+  List.findOne({_id: req.params.listId}, (err,list) => {
+    if(err){
+      return res.status(400).json({
+        status:true,
+        error : err
+      })
+    }
+    else
+    {
+      return res.json({
+        status : true,
+        list
+      })
+    }
+  })
+}
+
 exports.getLists = async(req, res) => {
   const listObjs = await req.user.lists.map(listId => List.findOne({_id : listId}))
 
