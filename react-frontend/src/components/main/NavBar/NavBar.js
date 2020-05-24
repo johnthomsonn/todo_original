@@ -23,22 +23,6 @@ useEffect(() => {
           <Link className="nav-link" to={`/${JSON.parse(window.sessionStorage.getItem("user")).username}`}>
             Profile
           </Link>
-        </li><li className="nav-item dropdown">
-          <a
-            className="nav-link dropdown-toggle"
-            data-toggle="dropdown"
-            role="button"
-            aria-haspopup="true"
-            aria-expanded="false"
-            href="#"
-          >
-            Lists
-          </a>
-          <div className="dropdown-menu">
-            <a className="dropdown-item" href="#">
-              Home
-            </a>
-          </div>
         </li></>)}
 
       </ul>
