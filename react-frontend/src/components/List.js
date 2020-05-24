@@ -5,6 +5,7 @@ import {Redirect} from 'react-router-dom'
 const List = props => {
   useEffect(() => {
     getList();
+    //alert(props.user._id)
   }, []);
 
   const [list, setList] = useState({
@@ -21,7 +22,7 @@ const List = props => {
 
   if(list.redirect)
   {
-    return <Redirect to={`/${props.user.username}/${list.name}`} />
+    return <Redirect to={{pathname : `/${props.user.username}/${list.name}`, user : props.user}} />
   }
 
   const uppercaseFirstLetter = word => word.replace(word.charAt(0), word.charAt(0).toUpperCase())
