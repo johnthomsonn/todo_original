@@ -24,6 +24,8 @@ const List = props => {
     return <Redirect to={`/${props.user.username}/${list.name}`} />
   }
 
+  const uppercaseFirstLetter = word => word.replace(word.charAt(0), word.charAt(0).toUpperCase())
+
 
 
   const getList = () => {
@@ -45,14 +47,14 @@ const List = props => {
           items : data.list.items
       }))
       .catch(err =>
-        console.log("ERROR getting individual list form id: " + err)
+        console.log("ERROR getting individual list from id: " + err)
       );
   };
 
   return (
     <>
       <div className="list-summary-div" onClick={clickList}>
-        <h2>{list.name}</h2>
+        <h2>{uppercaseFirstLetter(list.name)}</h2>
         <h4>#items: {list.items.length}</h4>
 
 
