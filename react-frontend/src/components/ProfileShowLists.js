@@ -9,13 +9,14 @@ const style = {
   flexDirection : "column",
 }
 
+useEffect(() => {
 
-  
+},[])
+
 
   return (<>
     <div className="show-lists-container">
       <h3> Your lists </h3>
-
       <div className="show-lists" style={style}>
         {props.lists.map((list,index) => <List listId={list} key={index} {...props} /> )}
       </div>
