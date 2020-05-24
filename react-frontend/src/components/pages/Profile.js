@@ -17,6 +17,8 @@ const Profile = (props) => {
     lists :[]
   })
 
+//Don't think I need this anymore, will remove later
+//TODO remove
   const [list, setList] = useState({
     name : "",
     items : []
@@ -52,7 +54,6 @@ const Profile = (props) => {
       })
 
       const data = await fetchResponse.json();
-      console.log(data);
       setList(data)
     }
     catch(err)
@@ -63,7 +64,7 @@ const Profile = (props) => {
 
 
   const getUserProfile =() =>  {
-    console.log("getUserProfile username param: ",props.match.params.username)
+
     fetch(`http://localhost:5000/users/${props.match.params.username}`,{
       method : "GET",
       mode : 'cors',
@@ -80,8 +81,6 @@ const Profile = (props) => {
         }
         else
         {
-          console.log("we have the data")
-          console.log(data)
           setUser({...user,
             username : data.user.username,
             id : data.user._id,
@@ -118,7 +117,7 @@ const Profile = (props) => {
       <CreateList user={user} setLists={setNewList}/>
 </div>
 <div className="col-md-8">
-      <ProfileShowLists />
+      <ProfileShowLists lists={user.lists} {...props} user={user}/>
 </div>
       </div>
 
