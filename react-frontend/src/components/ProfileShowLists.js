@@ -1,13 +1,23 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './ProfileShowLists.css'
+import List from './List'
 const ProfileShowLists = (props) => {
+
+const style = {
+  display : "flex",
+  alignItems : "center",
+  flexDirection : "column",
+}
+
+
+  
 
   return (<>
     <div className="show-lists-container">
       <h3> Your lists </h3>
 
-      <div className="show-lists">
-        Your lists will show here. I will work on another componenet that we can use. map through lists array and render the component with the info
+      <div className="show-lists" style={style}>
+        {props.lists.map((list,index) => <List listId={list} key={index} {...props} /> )}
       </div>
 
     </div>
