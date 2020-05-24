@@ -4,6 +4,7 @@ const {uuid} = require('uuidv4');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const {ObjectId} = mongoose.Schema;
+  const {listSchema} = require('./listmodel')
 
 const userSchema = new mongoose.Schema({
   username :{
