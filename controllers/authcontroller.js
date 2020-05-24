@@ -68,10 +68,10 @@ exports.signup = async (req, res) => {
 
 exports.signin = async (req, res) => {
   let foundUser = undefined;
-
   if(/@/.test(req.body.email))
   {
-    foundUser = await User.findOne({email: req.body.email});
+    const email = _.toLower(req.body.email)
+    foundUser = await User.findOne({email: email});
   }
   else
   {
