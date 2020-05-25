@@ -6,6 +6,7 @@ import TodoItem from "../TodoItem";
 
 const ListPage = props => {
   const [items, setItems] = useState([]);
+  const [error, setError] = useState("")
 
   useEffect(() => {
     fetchList();
@@ -26,6 +27,7 @@ const ListPage = props => {
       );
 
       const listData = await listResponse.json();
+      console.log(listData)
       setItems(listData.list.items);
     } catch (err) {
       console.log("Error fetching the list ", err);
@@ -35,6 +37,10 @@ const ListPage = props => {
   return (
     <>
       <NavBar history={props.history} />
+      <div className="alert alert-danger" style={{display : (error.length) ? "" : "none"}}>
+        {error}
+      </div>
+
       <div className="list-page-top">
         <CreateTodo />
       </div>
