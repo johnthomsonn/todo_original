@@ -49,7 +49,7 @@ try {
 
   const handleChange = event => {
     const name = event.target.value;
-    const invalidChars = name.match(/[*^<>@'/\\"]/gi);
+    const invalidChars = name.match(/[*^<>@'/\\"\d]/gi);
     if (invalidChars) {
       setInvalid(invalidChars);
     } else {
