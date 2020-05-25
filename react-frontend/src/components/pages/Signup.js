@@ -88,8 +88,8 @@ const Signup = (props) => {
 
   if(input.redirect)
   {
-    const  id =window.sessionStorage.getItem("user")._id;
-    return <Redirect to={`/${id}`} />
+    const  username = JSON.parse(window.sessionStorage.getItem("user")).username;
+    return <Redirect to={`/${username}`} />
   }
 
   const signupForm = () => {

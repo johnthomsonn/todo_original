@@ -31,7 +31,7 @@ const Profile = (props) => {
 
 
 
-  const getUserProfile =() =>  {
+  const getUserProfile = () =>  {
 
     fetch(`http://localhost:5000/users/${props.match.params.username}`,{
       method : "GET",
@@ -45,7 +45,6 @@ const Profile = (props) => {
       .then(data => {
         if(data.error)
         {
-          alert(data.error)
             setUser({...user, redirect : true})
         }
         else
