@@ -1,6 +1,5 @@
 # todo
-Todo list created with Node js and React. It is a learning curve and so there is a mixture
-of methods. Some using async/await and others using callback functions.
+Todo list created with Node js and React. In progress.
 
 ## API endpoints
 
@@ -23,23 +22,4 @@ of methods. Some using async/await and others using callback functions.
 ``` GET /users/:username/lists/:listname/items/:itemId/check ``` => sets completed to true and returns the updated item  
 ``` GET /users/:username/lists/:listname/items/:itemId/uncheck ``` => sets completed to false and returns the updated item  
 
-### Backend todo list
-- [x] sign up/create user  
-  - [x] validation on signup
 
-- [x] sign in    
-  - [x] sign in validation  
-
-- [x] sign out  
-
-- [x] delete account
-
-- [x] make todo lists  
-  - [x] view specific list  
-  - [x] remove todo lists
-
-- [x] make todo items  
-  - [x] check / uncheck items off  
-   - [x] remove items  
-
-- [x] Sanitize inputs  

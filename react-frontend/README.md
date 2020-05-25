@@ -1,8 +1,7 @@
 # React front end
 
-## Todo
-- refactor signup/sign in scss to use mixins
 
+<<<<<<< HEAD
 #### Profile
   - view user information
   - create list
@@ -15,3 +14,5 @@
 
 
 ### Bugs
+=======
+>>>>>>> 75041e0a622ac0507eb666daf6a8dd97980f8b3e
