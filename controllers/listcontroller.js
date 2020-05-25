@@ -1,9 +1,9 @@
 const express = require("express");
 const List = require("../models/listmodel");
 const User = require("../models/usermodel");
+const Item = require("../models/itemmodel");
 const _ = require("lodash");
-const {yellow} = require('../utils/debug')
-
+const {yellow} = require("../utils/debug");
 
 //middleware to attach list to req
 exports.getListByListName = (req, res, next, listName) => {
@@ -21,40 +21,39 @@ exports.getListByListName = (req, res, next, listName) => {
   }).populate("items", "content completed");
 };
 
-exports.getListByListId = (req,res) => {
-  List.findOne({_id: req.params.listId}, (err,list) => {
-    if(err){
+exports.getListByListId = (req, res) => {
+  List.findOne({_id: req.params.listId}, (err, list) => {
+    if (err) {
       return res.status(400).json({
-        status:true,
-        error : err
-      })
-    }
-    else
-    {
+        status: true,
+        error: err
+      });
+    } else {
       return res.json({
-        status : true,
+        status: true,
         list
-      })
+      });
     }
-  })
-}
+  });
+};
 
-exports.getLists = async(req, res) => {
-  const listObjs = await req.user.lists.map(listId => List.findOne({_id : listId}))
+exports.getLists = async (req, res) => {
+  const listObjs = await req.user.lists.map(listId =>
+    List.findOne({_id: listId})
+  );
 
   const lists = await Promise.all(listObjs);
 
-
   //lists.map(list => console.log(list))
 
-   return res.json({
-     status: true,
+  return res.json({
+    status: true,
     lists
-   });
+  });
 };
 
 exports.createList = async (req, res) => {
-  console.log("list name coming in is: " + req.body.name)
+  console.log("list name coming in is: " + req.body.name);
   const usersLists = req.user.lists;
   req.body.name = _.toLower(req.body.name);
 
@@ -63,10 +62,8 @@ exports.createList = async (req, res) => {
   );
   const found = await Promise.all(promises).then(listArray => {
     return listArray.find(list => {
-      if(list != null)
-      {
-        if(list.name === req.body.name)
-        return true;
+      if (list != null) {
+        if (list.name === req.body.name) return true;
       }
     });
     // listArray.map(list => {
@@ -81,7 +78,7 @@ exports.createList = async (req, res) => {
       error: "You already have a list of that name"
     });
   } else {
-    const list = await new List({name : req.body.name, user_id : req.user._id});
+    const list = await new List({name: req.body.name, user_id: req.user._id});
     await list.save();
     const user = await User.findOneAndUpdate(
       {_id: req.user._id},
@@ -106,27 +103,47 @@ exports.createList = async (req, res) => {
 
 exports.getList = (req, res) => {
   return res.json({
-status: true,
-    list : req.list
+    status: true,
+    list: req.list
   });
 };
 
-exports.deleteList = (req, res) => {
+//with list deletion
+//need to delete all items in list
+// need to delete reference from user
+exports.deleteList = async (req, res) => {
   const listToDelete = req.list;
-  listToDelete.remove(err => {
-    if(err)
-    {
-      return res.status(400).json({
+  //delete all items in list first
+  const itemPromises = await listToDelete.items.map(item =>
+    Item.findOne({_id: item._id})
+  );
+  const items = await Promise.all(itemPromises);
+  items.map(item => item.remove());
+
+  //now remove the list
+  const deletedList = await listToDelete.remove();
+  if (!deletedList) {
+    return res.status(400).json({
+      status: true,
+      error: "Could not remove the list " + err
+    });
+  } else {
+    //if list was removed, remove the reference from user list array
+    const newList = req.user.lists.filter(
+      list => list.toString() != deletedList._id
+    );
+    req.user.lists = newList;
+    const updatedUser = await req.user.save();
+    if (!updatedUser) {
+      res.status(400).json({
         status: true,
-        error : "Could not remove the list " + err
+        error: "An error occured when trying to save the updated user lists"
       });
-    }
-    else
-    {
+    } else {
       return res.json({
         status: true,
-        message : `List ${listToDelete.name} has been deleted`
+        message: `List ${listToDelete.name} has been deleted`
       });
     }
-  })
+  }
 };
