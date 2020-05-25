@@ -44,6 +44,7 @@ const Signup = (props) => {
     fetch("http://localhost:5000/auth/signup", {
       method : "POST",
       mode : 'cors',
+      credentials : 'include',
       headers :{
         Accept : "application/json",
         "Content-Type" : "application/json"

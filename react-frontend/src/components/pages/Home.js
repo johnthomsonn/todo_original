@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect,useState} from "react";
 import NavBar from "../main/NavBar/NavBar";
 import './Home.css'
 import CreateTodo from '../main/CreateTodo'
@@ -7,7 +7,11 @@ import {faCheck as tick} from "@fortawesome/free-solid-svg-icons";
 
 const Home = (props) => {
 
+const [error,setError] = useState("")
 
+useEffect(() =>{
+  setRedirectErrorFromURL()
+}, [props.location.search])
 
   const animatePerLine = (li) => {
     li.classList.add("checked");
@@ -19,12 +23,26 @@ const clickedTodo = event => {
 
 if(props.match.params.error != null)
 {
-  console.log("ERRORORORORORORO")
+  alert("errpr on error£")
 }
+
+
+
+const setRedirectErrorFromURL = () => {
+
+    const [error,msg] = props.location.search.split("=")
+     if(msg === "usernameParamError")
+     {
+       setError("You cannot access another user")
+     }
+}
+
   return (
     <>
       <NavBar history={props.history} />
-
+      <div className="alert alert-danger" style={{display : (error.length) ? "" : "none", fontWeight :"bold", border: "2px solid darkred", textAlign:"center"}}>
+        {error}
+      </div>
       <div className="container-fluid">
 
       <section id="header">

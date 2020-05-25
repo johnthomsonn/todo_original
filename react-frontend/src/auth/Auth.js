@@ -35,7 +35,8 @@ export const signout = (next)=> {
   next()
   return fetch("http://localhost:5000/auth/signout", {
     credentials :'include',
-    mode : 'cors'
+    mode : 'cors',
+    credentials : 'include'
   })
     .then(response => response.json())
     .catch(err => console.log(err));

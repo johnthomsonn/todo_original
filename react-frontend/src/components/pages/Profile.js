@@ -45,6 +45,7 @@ const Profile = (props) => {
       .then(data => {
         if(data.error)
         {
+          alert(data.error)
             setUser({...user, redirect : true})
         }
         else
@@ -63,7 +64,7 @@ const Profile = (props) => {
 
   if(user.redirect)
   {
-    return <Redirect to={"/?error=notlogged"} />
+    return <Redirect to={"/?error=usernameParamError"} />
   }
 
   return (
