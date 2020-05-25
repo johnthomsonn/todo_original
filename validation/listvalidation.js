@@ -7,6 +7,8 @@ exports.getListCreationErrors = (
     .isEmpty()
     .trim()
     .escape()
+    .custom(value => !/[\d]/.test(value))
+    .withMessage("list name cannot contain numbers")
   ]
 )
 
