@@ -10,7 +10,7 @@ const ListPage = props => {
   const [listName, setListName] = useState("");
 
   useEffect(() => {
-    setUserName(props.location.state.user.username);
+    setUserName(props.match.params.username);
     fetchList();
     setListName(props.match.params.list);
   }, []);
@@ -18,7 +18,7 @@ const ListPage = props => {
   const fetchList = async () => {
     try {
       const listResponse = await fetch(
-        `http://localhost:5000/users/${props.location.state.user.username}/lists/${props.match.params.list}`,
+        `http://localhost:5000/users/${props.match.params.username}/lists/${props.match.params.list}`,
         {
           method: "GET",
           mode: "cors",
@@ -28,7 +28,9 @@ const ListPage = props => {
           }
         }
       );
+
       const listData = await listResponse.json();
+      console.log(listData)
       setItems(listData.list.items);
     } catch (err) {
       console.log("Error fetching the list ", err);

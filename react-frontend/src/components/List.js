@@ -22,7 +22,7 @@ const List = props => {
 
   if(list.redirect)
   {
-    return <Redirect to={{pathname : `/${props.user.username}/${list.name}`, user : props.user}} />
+    return <Redirect push to={{pathname : `/${props.user.username}/${list.name}`, user : props.user}} />
   }
 
   const uppercaseFirstLetter = word => word.replace(word.charAt(0), word.charAt(0).toUpperCase())
