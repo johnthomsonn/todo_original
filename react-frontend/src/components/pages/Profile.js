@@ -23,6 +23,12 @@ const Profile = (props) => {
 
   },[])
 
+  const setLists = newList => {
+    const currLists = user.lists;
+    currLists.push(newList)
+    setUser({...user, lists : currLists})
+  }
+
 
 
   const getUserProfile =() =>  {
@@ -76,10 +82,10 @@ const Profile = (props) => {
 
     <div className="col-md-3">
       <ProfileInfo user={user}  />
-      <CreateList user={user} />
+      <CreateList user={user} setLists={setLists} />
 </div>
 <div className="col-md-8">
-      <ProfileShowLists lists={user.lists} {...props} user={user}/>
+      <ProfileShowLists lists={user.lists} {...props} user={user} />
 </div>
       </div>
 
