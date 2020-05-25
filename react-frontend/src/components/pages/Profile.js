@@ -33,7 +33,7 @@ const Profile = (props) => {
 
   const getUserProfile = () =>  {
 
-    fetch(`http://localhost:5000/users/${props.match.params.username}`,{
+    fetch(`${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}`,{
       method : "GET",
       mode : 'cors',
       credentials : 'include',

@@ -4,6 +4,7 @@ import {Redirect, Link} from 'react-router-dom'
 import "./Signin.css";
 import {cleanInput, validateEmail} from "../../auth/Auth";
 
+
 const Signin = (props) => {
   const [input, setInput] = useState({
     email: "",
@@ -68,7 +69,7 @@ useEffect(() => {
 
   const signIn =  () => {
     setInput({...input, loading : true})
-    fetch("http://localhost:5000/auth/signin", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signin`, {
       method : "POST",
       mode : 'cors',
       credentials : 'include',

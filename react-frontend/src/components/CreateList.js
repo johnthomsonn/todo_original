@@ -13,7 +13,7 @@ const CreateList = props => {
 
 try {
   const username = JSON.parse(window.sessionStorage.getItem('user')).username
-    const fetchResponse = await fetch(`http://localhost:5000/users/${username}/lists`, {
+    const fetchResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/${username}/lists`, {
       method : "POST",
       mode : "cors",
       credentials : "include",

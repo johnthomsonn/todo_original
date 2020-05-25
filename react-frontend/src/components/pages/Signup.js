@@ -41,7 +41,7 @@ const Signup = (props) => {
 
   const signUp = () => {
     setInput({...input, loading : true})
-    fetch("http://localhost:5000/auth/signup", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, {
       method : "POST",
       mode : 'cors',
       credentials : 'include',

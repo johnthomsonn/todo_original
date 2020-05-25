@@ -31,7 +31,7 @@ const List = props => {
 
   const getList = () => {
     fetch(
-      `http://localhost:5000/users/${props.match.params.username}/lists/listid/${props.listId}`,
+      `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/listid/${props.listId}`,
       {
         method: "GET",
         mode: "cors",

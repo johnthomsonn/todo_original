@@ -3,7 +3,7 @@ export const cleanInput = input => !/[[\]<>^!@"()#}/{+\s]/.test(input);
 export const validateEmail = email => /.+@.+\..+/.test(email);
 
 export const isLoggedInOld = () => {
-  fetch("http://localhost:5000/auth/islogged")
+  fetch(`${process.env.REACT_APP_SERVER_URL}/auth/islogged`)
     .then(res => res.json())
     .then(data => {
       if (data.logged){
@@ -33,7 +33,7 @@ export const signout = (next)=> {
     window.sessionStorage.removeItem("status");
   }
   next()
-  return fetch("http://localhost:5000/auth/signout", {
+  return fetch(`${process.env.REACT_APP_SERVER_URL}/auth/signout`, {
     credentials :'include',
     mode : 'cors',
     credentials : 'include'

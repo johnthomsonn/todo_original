@@ -15,7 +15,7 @@ const ListPage = props => {
   const fetchList = async () => {
     try {
       const listResponse = await fetch(
-        `http://localhost:5000/users/${props.match.params.username}/lists/${props.match.params.list}`,
+        `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}`,
         {
           method: "GET",
           mode: "cors",
