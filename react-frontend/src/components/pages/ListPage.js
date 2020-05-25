@@ -6,13 +6,9 @@ import TodoItem from "../TodoItem";
 
 const ListPage = props => {
   const [items, setItems] = useState([]);
-  const [userName, setUserName] = useState("");
-  const [listName, setListName] = useState("");
 
   useEffect(() => {
-    setUserName(props.match.params.username);
     fetchList();
-    setListName(props.match.params.list);
   }, []);
 
   const fetchList = async () => {
@@ -30,7 +26,6 @@ const ListPage = props => {
       );
 
       const listData = await listResponse.json();
-      console.log(listData)
       setItems(listData.list.items);
     } catch (err) {
       console.log("Error fetching the list ", err);

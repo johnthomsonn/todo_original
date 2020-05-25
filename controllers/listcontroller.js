@@ -54,6 +54,7 @@ exports.getLists = async(req, res) => {
 };
 
 exports.createList = async (req, res) => {
+  console.log("list name coming in is: " + req.body.name)
   const usersLists = req.user.lists;
   req.body.name = _.toLower(req.body.name);
 
