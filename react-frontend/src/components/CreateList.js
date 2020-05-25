@@ -5,7 +5,6 @@ import {Redirect} from 'react-router-dom'
 const CreateList = props => {
   const [listName, setListName] = useState("");
   const [invalid, setInvalid] = useState([]);
-  const [message, setMessage] = useState("")
   const [error, setError] = useState("")
   const [redirect, setRedirect] = useState(false)
 
@@ -34,8 +33,8 @@ try {
     //list was created
     else
     {
+
       props.setLists(dataJson.list)
-      setMessage(dataJson.message)
       setRedirect(true)
     }
   }
@@ -57,7 +56,6 @@ try {
       setInvalid([]);
     }
     setError("")
-    setMessage("")
     setListName(event.target.value);
   };
 
@@ -97,12 +95,7 @@ try {
     <div className="create-list">
       {props.user.username != "" && showCreateList()}
 
-      <div
-        className="alert alert-success"
-        style={{display: (message && message.length > 0) ? "" : "none", fontSize : "0.9rem"}}
-      >
-      {message}
-      </div>
+
 
       <div
         className="alert alert-danger"
