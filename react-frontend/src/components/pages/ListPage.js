@@ -12,6 +12,10 @@ const ListPage = props => {
     fetchList();
   }, []);
 
+  const addItem = item => {
+    setItems([...items,item])
+  }
+
   const fetchList = async () => {
     try {
       const listResponse = await fetch(
@@ -27,7 +31,6 @@ const ListPage = props => {
       );
 
       const listData = await listResponse.json();
-      console.log(listData)
       setItems(listData.list.items);
     } catch (err) {
       console.log("Error fetching the list ", err);
@@ -42,7 +45,7 @@ const ListPage = props => {
       </div>
 
       <div className="list-page-top">
-        <CreateTodo />
+        <CreateTodo  {...props}  addItem={addItem}/>
       </div>
 
       <hr style={{marginTop: "5%"}} />
@@ -50,7 +53,7 @@ const ListPage = props => {
       <div className="list-page-bottom">
         {items !== undefined &&
           items.map((item, index) => (
-            <TodoItem content={items[index].content} key={index} />
+            <TodoItem content={items[index].content} key={index}/>
           ))}
       </div>
     </>
