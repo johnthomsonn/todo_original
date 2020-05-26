@@ -50,10 +50,10 @@ const ListPage = props => {
 
       <hr style={{marginTop: "5%"}} />
 
-      <div className="list-page-bottom">
+      <div className="list-page-bottom  ">
         {items !== undefined &&
           items.map((item, index) => (
-            <TodoItem content={items[index].content} key={index}/>
+            <TodoItem content={items[index].content} key={index} id={items[index]._id}/>
           ))}
       </div>
     </>
