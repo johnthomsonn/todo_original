@@ -20,7 +20,7 @@ exports.getItemsInList = (req, res) => {
   const list = req.list;
   return res.json({
     status: true,
-    items : list.items
+    items: list.items
   });
 };
 
@@ -29,14 +29,17 @@ exports.addItemToList = async (req, res) => {
   const user = req.user;
   const content = req.body;
   try {
-    const newItem = await new Item({content : req.body.content, user_id : req.user._id});
+    const newItem = await new Item({
+      content: req.body.content,
+      user_id: req.user._id
+    });
     await newItem.save();
 
     list.items.push(newItem);
     await list.save();
     return res.json({
       status: true,
-      item : newItem
+      item: newItem
     });
   } catch (err) {
     error(err);
@@ -48,86 +51,74 @@ exports.addItemToList = async (req, res) => {
 };
 
 exports.deleteItem = (req, res) => {
-  req.item.remove((err,item) => {
+  req.item.remove((err, item) => {
     if (err) {
       res.status(400).json({
         status: true,
-        error : "Could not delete item " + req.item
-      })
-    }
-    else
-    {
+        error: "Could not delete item " + req.item
+      });
+    } else {
       return res.json({
         status: true,
-        message : `item (${item.content}) deleted`
-      })
+        message: `item (${item.content}) deleted`
+      });
     }
   });
 };
 
-exports.completeItem = (req,res) =>
-{
+exports.completeItem = (req, res) => {
   let item = req.item;
   item.setCompleted();
   item.save((err, updated) => {
-    if(err){
+    if (err) {
       return res.status(400).json({
         status: true,
-        error : "error trying to check the item"
-      })
-    }
-    else
-    {
+        error: "error trying to check the item"
+      });
+    } else {
       return res.json({
         status: true,
-        item : updated
-      })
+        item: updated
+      });
     }
   });
-}
+};
 
-exports.undoCompleteItem = async (req,res) => {
+exports.undoCompleteItem = async (req, res) => {
   let item = req.item;
   item.undoCompleted();
   item.save((err, updated) => {
-    if(err){
+    if (err) {
       return res.status(400).json({
         status: true,
-        error : "error trying to uncheck the item"
-      })
-    }
-    else
-    {
+        error: "error trying to uncheck the item"
+      });
+    } else {
       return res.json({
         status: true,
-        item : updated
-      })
+        item: updated
+      });
     }
   });
-}
+};
 
-exports.toggleCheck = async (req,res) => {
-  let item = req.item
+exports.toggleCheck = async (req, res) => {
+  let item = req.item;
   try {
-  item.toggleCompleted()
-  const updated = await item.save();
-  if(!updated)
-  {
-    return res.status(400).json({
-      status: true,
-      error : "error trying to toggle the state of the item"
-    })
+    item.toggleCompleted();
+    const updated = await item.save();
+    if (!updated) {
+      return res.status(400).json({
+        status: true,
+        error: "error trying to toggle the state of the item"
+      });
+    } else {
+      return res.json({
+        status: true,
+        item: updated
+      });
+    }
+  } catch (err) {
+    console.log(err);
   }
-  else
-  {
-    return res.json({
-      status: true,
-      item : updated
-    })
-  }
-}
-catch(err)
-{
-  console.log(err)
-}
-}
+};
