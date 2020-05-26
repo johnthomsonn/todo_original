@@ -27,9 +27,9 @@ itemSchema.methods = {
   },
   toggleCompleted : function (){
     if(this.completed)
-      undoCompleted()
+      this.undoCompleted()
     else
-      setCompleted()
+      this.setCompleted()
   }
 }
 module.exports = mongoose.model('Item', itemSchema)
