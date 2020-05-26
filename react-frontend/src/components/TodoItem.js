@@ -12,6 +12,10 @@ const [id,setID] = useState("")
     document.getElementById(`${id}`).classList.toggle("checked")
   }
 
+  const checkTodoOnServer = () => {
+
+  }
+
   return (<>
     <div className={styles} onClick={checkTodo} id={id}>
       <p className="todo-content">

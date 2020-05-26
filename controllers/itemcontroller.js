@@ -105,3 +105,29 @@ exports.undoCompleteItem = async (req,res) => {
     }
   });
 }
+
+exports.toggleCheck = async (req,res) => {
+  let item = req.item
+  try {
+  item.toggleCompleted()
+  const updated = await item.save();
+  if(!updated)
+  {
+    return res.status(400).json({
+      status: true,
+      error : "error trying to toggle the state of the item"
+    })
+  }
+  else
+  {
+    return res.json({
+      status: true,
+      item : updated
+    })
+  }
+}
+catch(err)
+{
+  console.log(err)
+}
+}
