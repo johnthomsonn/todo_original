@@ -36,7 +36,7 @@ exports.addItemToList = async (req, res) => {
     await list.save();
     return res.json({
       status: true,
-      items : list.items
+      item : newItem
     });
   } catch (err) {
     error(err);
