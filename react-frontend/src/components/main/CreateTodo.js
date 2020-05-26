@@ -4,9 +4,11 @@ import {faPencilAlt as pencil} from "@fortawesome/free-solid-svg-icons";
 import  "./CreateTodo.css";
 import {cleanInput} from '../../auth/Auth'
 
-const CreateTodo = () => {
+
+const CreateTodo = props => {
   const [todoInput, setTodoInput] = useState("");
   const [goodInput,setGoodInput] = useState(false)
+  const [error, setError] = useState("")
 
 
   useEffect( () =>{
@@ -19,9 +21,11 @@ const CreateTodo = () => {
 
   };
 
+
+
   const validInput = () => {
 
-    if(todoInput === "" || !cleanInput(todoInput))
+    if(todoInput === "" )
     {
       setGoodInput(false)
     }else
@@ -37,12 +41,54 @@ const CreateTodo = () => {
       alert("You must enter something");
       return;
     }
-    alert(todoInput)
     setTodoInput("")
+    submitTodoToServer()
   };
 
+  const submitTodoToServer = async () => {
+    console.log("about to submit to server")
+    try
+    {
+      const fetchresponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items`,
+      {
+        method : "POST",
+        mode : "cors",
+        credentials : "include",
+        headers : {
+          Accept : "application/json",
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({content : todoInput})
+      })
 
-  return (
+      const responseData = await fetchresponse.json()
+
+      if(responseData.error)
+      {
+        setError(responseData.error)
+      }
+      else
+      {
+        props.addItem(responseData.item)
+      }
+
+    }
+    catch(err)
+    {
+      console.log("Error submitting todo: " + err)
+    }
+  }
+
+
+  return (<>
+
+    <div
+      className="alert alert-danger"
+      style={{display: error.length ? "" : "none"}}
+    >
+      {error}
+    </div>
+
     <div className="col-3 todo-create mt-5">
       <form className="todo-text " onSubmit={submitTodo}>
         <input
@@ -68,7 +114,7 @@ const CreateTodo = () => {
         </button>
       </form>
     </div>
-  );
+  </>);
 };
 
 export default CreateTodo;
