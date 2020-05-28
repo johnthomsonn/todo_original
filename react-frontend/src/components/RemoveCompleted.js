@@ -1,6 +1,9 @@
 import React from "react";
 import "./RemoveCompleted.css";
 
+        import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+        import {faTrash as trash} from "@fortawesome/free-solid-svg-icons";
+
 const RemoveCompleted = props => {
   const btnStyle = {
     border: "2px solid black",
@@ -54,8 +57,12 @@ const RemoveCompleted = props => {
           className="remove-button btn btn-outline btn-raised"
           style={btnStyle}
         >
-          Remove completed items
+          Remove completed items 
+            <FontAwesomeIcon icon={trash} className="trash" />
         </button>
+
+
+
       </div>
     </>
   );

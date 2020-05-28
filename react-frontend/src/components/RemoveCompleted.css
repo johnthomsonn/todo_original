@@ -1,9 +1,16 @@
 .remove-completed-div {
   background-color: inherit;
+  position: absolute;
+  right: 2%;
+  top: 25%;
 }
 
 .remove-button:hover {
   transform: scale(1.05);
+}
+
+.trash {
+  margin-left: 2%;
 }
 
 /*# sourceMappingURL=RemoveCompleted.css.map */
