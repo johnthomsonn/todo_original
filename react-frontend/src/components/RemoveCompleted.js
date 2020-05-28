@@ -13,6 +13,7 @@ const btnStyle = {
 
   const remove = () =>{
     let itemsToRemove = props.items.filter(item => item.completed === true)
+
   }
 
   return (<>
