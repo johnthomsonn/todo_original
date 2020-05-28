@@ -1,29 +1,64 @@
-import React from 'react'
-import './RemoveCompleted.css'
-
+import React from "react";
+import "./RemoveCompleted.css";
 
 const RemoveCompleted = props => {
+  const btnStyle = {
+    border: "2px solid black",
+    backgroundColor: "#eddf91",
+    boxShadow:
+      "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    fontFamily: "Balsamiq Sans, cursive"
+  };
 
-const btnStyle = {
-  border: "2px solid black",
-  backgroundColor : "#eddf91",
-  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-  fontFamily: "Balsamiq Sans, cursive"
-}
+  const serverCall = item => {
+    fetch(
+    `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items/${item._id}`  ,
+      {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(item)
+      }
+    )
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.log("Error making server delete item call: ", err));
+  };
 
-  const remove = () =>{
-    let itemsToRemove = props.items.filter(item => item.completed === true)
+  const remove = async () => {
+    let allItems = props.items
+    let itemsToRemove = []
+    let itemsKept = []
+    allItems.filter(item => {
+      if(item.completed === true)
+        itemsToRemove.push(item)
+        else
+        itemsKept.push(item)
+    });
+    if (itemsToRemove.length > 0) {
+      let removePromises = await itemsToRemove.map(item => serverCall(item));
+      let resolved = await Promise.all(removePromises);
+      props.updateitemsAfterDelete(itemsKept)
+    }
+  };
 
-  }
+  return (
+    <>
+      <div className="remove-completed-div">
+        <button
+          onClick={remove}
+          className="remove-button btn btn-outline btn-raised"
+          style={btnStyle}
+        >
+          Remove completed items
+        </button>
+      </div>
+    </>
+  );
+};
 
-  return (<>
-    <div className="remove-completed-div">
-
-    <button onClick={remove} className="remove-button btn btn-outline btn-raised" style={btnStyle}>
-      Remove completed items
-    </button>
-    </div>
-  </>)
-}
-
-export default RemoveCompleted
+export default RemoveCompleted;
