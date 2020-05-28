@@ -3,18 +3,19 @@ import CreateTodo from "../main/CreateTodo";
 import NavBar from "../main/NavBar/NavBar";
 import "./ListPage.css";
 import TodoItem from "../TodoItem";
+import RemoveCompleted from "../RemoveCompleted";
 
 const ListPage = props => {
   const [items, setItems] = useState([]);
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchList();
   }, []);
 
   const addItem = item => {
-    setItems([...items,item])
-  }
+    setItems([...items, item]);
+  };
 
   const fetchList = async () => {
     try {
@@ -38,28 +39,33 @@ const ListPage = props => {
   };
 
   const updateTodo = todo => {
-    let old = items
-    let copy = [...items]
+    let old = items;
+    let copy = [...items];
     let newItems = items.map(item => {
-      if(item._id == todo.id)
-      {
-        item.completed = !todo.completed
+      if (item._id == todo.id) {
+        item.completed = !todo.completed;
       }
-      return item
-    })
-    setItems(newItems)
-  }
-
+      return item;
+    });
+    setItems(newItems);
+  };
 
   return (
     <>
       <NavBar history={props.history} />
-      <div className="alert alert-danger" style={{display : (error.length) ? "" : "none"}}>
+      <div
+        className="alert alert-danger"
+        style={{display: error.length ? "" : "none"}}
+      >
         {error}
       </div>
 
       <div className="list-page-top">
-        <CreateTodo  {...props}  addItem={addItem}/>
+        <CreateTodo {...props} addItem={addItem} />
+
+        <div className="remove-completed">
+          <RemoveCompleted {...props} items={items}/>
+        </div>
       </div>
 
       <hr style={{marginTop: "5%"}} />
@@ -67,7 +73,14 @@ const ListPage = props => {
       <div className="list-page-bottom  ">
         {items !== undefined &&
           items.map((item, index) => (
-            <TodoItem content={items[index].content} key={index} id={items[index]._id} {...props} completed={items[index].completed} updateTodo={updateTodo}/>
+            <TodoItem
+              content={items[index].content}
+              key={index}
+              id={items[index]._id}
+              {...props}
+              completed={items[index].completed}
+              updateTodo={updateTodo}
+            />
           ))}
       </div>
     </>
