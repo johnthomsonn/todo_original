@@ -50,6 +50,10 @@ const ListPage = props => {
     setItems(newItems);
   };
 
+  const updateItemsAfterDelete = items => {
+    setItems(items)
+  }
+
   return (
     <>
       <NavBar history={props.history} />
@@ -64,7 +68,7 @@ const ListPage = props => {
         <CreateTodo {...props} addItem={addItem} />
 
         <div className="remove-completed">
-          <RemoveCompleted {...props} items={items}/>
+          <RemoveCompleted {...props} items={items} updateitemsAfterDelete={updateItemsAfterDelete} />
         </div>
       </div>
 
