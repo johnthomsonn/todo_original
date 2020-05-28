@@ -37,6 +37,20 @@ const ListPage = props => {
     }
   };
 
+  const updateTodo = todo => {
+    let old = items
+    let copy = [...items]
+    let newItems = items.map(item => {
+      if(item._id == todo.id)
+      {
+        item.completed = !todo.completed
+      }
+      return item
+    })
+    setItems(newItems)
+  }
+
+
   return (
     <>
       <NavBar history={props.history} />
@@ -53,7 +67,7 @@ const ListPage = props => {
       <div className="list-page-bottom  ">
         {items !== undefined &&
           items.map((item, index) => (
-            <TodoItem content={items[index].content} key={index} id={items[index]._id}/>
+            <TodoItem content={items[index].content} key={index} id={items[index]._id} {...props} completed={items[index].completed} updateTodo={updateTodo}/>
           ))}
       </div>
     </>
