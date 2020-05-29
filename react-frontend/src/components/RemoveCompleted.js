@@ -14,6 +14,7 @@ const RemoveCompleted = props => {
   };
 
   const serverCall = item => {
+    console.log(props.match.params.list)
     fetch(
     `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items/${item._id}`  ,
       {
@@ -57,7 +58,7 @@ const RemoveCompleted = props => {
           className="remove-button btn btn-outline btn-raised"
           style={btnStyle}
         >
-          Remove completed items 
+          Remove completed items
             <FontAwesomeIcon icon={trash} className="trash" />
         </button>
 

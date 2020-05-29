@@ -51,19 +51,40 @@ exports.addItemToList = async (req, res) => {
 };
 
 exports.deleteItem = (req, res) => {
-  req.item.remove((err, item) => {
-    if (err) {
-      res.status(400).json({
+let listToUpdate = req.list;
+
+  let updatedListitems = listToUpdate.items.filter(item => item._id.toString() !== req.item._id.toString())
+  listToUpdate.items = updatedListitems
+  listToUpdate.save( (err, list) => {
+    if(err)
+    {
+      error("error saving updated list: " + err)
+      return res.status(400).json({
         status: true,
-        error: "Could not delete item " + req.item
-      });
-    } else {
-      return res.json({
-        status: true,
-        message: `item (${item.content}) deleted`
+        error : err
+      })
+    }
+    else
+    {
+      //item reference has been removed form list so remove item
+      req.item.remove((err, item) => {
+        if (err) {
+          res.status(400).json({
+            status: true,
+            error: "Could not delete item " + req.item
+          });
+        } else {
+          return res.json({
+            status: true,
+            message: `item (${item.content}) deleted`
+          });
+        }
       });
     }
-  });
+  })
+
+
+
 };
 
 exports.completeItem = (req, res) => {
