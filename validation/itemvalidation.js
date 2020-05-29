@@ -7,7 +7,8 @@ exports.getItemCreationErrors = (
       .not()
       .isEmpty()
       .trim()
-      .escape()
+      .custom(value => !/[<>\\]/.test(value))
+      .withMessage("Todo cannot contain certain special characters")
     ]
   ]
 )

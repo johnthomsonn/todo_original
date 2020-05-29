@@ -46,7 +46,6 @@ const CreateTodo = props => {
   };
 
   const submitTodoToServer = async () => {
-    console.log("about to submit to server")
     try
     {
       const fetchresponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items`,
@@ -84,7 +83,7 @@ const CreateTodo = props => {
 
     <div
       className="alert alert-danger"
-      style={{display: error.length ? "" : "none"}}
+      style={{ position : "absolute",display: error.length ? "" : "none", top: "100px"}}
     >
       {error}
     </div>
