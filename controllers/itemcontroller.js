@@ -76,7 +76,8 @@ let listToUpdate = req.list;
         } else {
           return res.json({
             status: true,
-            message: `item (${item.content}) deleted`
+            message: `item (${item.content}) deleted`,
+            list : listToUpdate
           });
         }
       });
