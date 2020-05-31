@@ -18,8 +18,8 @@ Todo list created with Node js and React. In progress.
 
 ``` GET /users/:username/lists/:listname/items ``` => returns all the items in the given list :listname (excluding name and _id)    
 ``` POST /users/:username/lists/:listname/items ``` => creates a new item and adds it to :listname then returns the items in :listname  
+``` DELETE /users/:username/lists/:listname/items ``` => deletes the array of items that is passed to it    
 ``` DELETE /users/:username/lists/:listname/items/:itemId ``` => deletes the item with :itemId and returns a success message  
 ``` GET /users/:username/lists/:listname/items/:itemId/check ``` => sets completed to true and returns the updated item  
-``` GET /users/:username/lists/:listname/items/:itemId/uncheck ``` => sets completed to false and returns the updated item  
-
-
+``` GET /users/:username/lists/:listname/items/:itemId/uncheck ``` => sets completed to false and returns the updated item
+``` GET /users/:username/lists/:listname/items/:itemId/toggle ``` => toggles the checked/unchecked state of the item  
