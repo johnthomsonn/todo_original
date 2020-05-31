@@ -34,8 +34,8 @@ app.use(cors({
 }));
 app.options('*', cors())
 
-// Database connection
-mongoose.connect(process.env.DB_URL, {
+// Database connection tried
+mongoose.connect(process.env.DB_CLUSTER_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology : true
   })
@@ -74,6 +74,6 @@ app.use(function (err,req,res,next) {
 
 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
 //start the backend server
 app.listen(port, () => debug(`Express server started on port ${port}`));
