@@ -55,19 +55,20 @@ exports.addItemToList = async (req, res) => {
 exports.deleteItems = async (req, res) => {
   let listToUpdate = req.list;
  let [keeping, deleting] = req.body;
-try {
-  const removePromises = await deleting.map(async item => {
-    const foundItem = await Item.findById(item._id)
-    return foundItem.remove()
+ let isError = undefined
+
+  const removePromises = await deleting.map(async itemObj => {
+    const foundItem = await Item.findById(itemObj._id).catch(e =>  error(e))
+    return await foundItem.remove().catch(e => error(e))
   })
   //const removeResults = await Promise.all(removePromises)
   listToUpdate.items = keeping;
-  const updated = await listToUpdate.save()
+  const updated = await listToUpdate.save().catch(e => error(e))
   if(updated)
   {
     return res.json({
       status : true,
-      message: `item (${item.content}) deleted`,
+      message: `items deleted`,
       list: updated
     })
   }
@@ -80,8 +81,8 @@ try {
     })
   }
 
-}
-catch(err) {
+
+if(isError){
   error("Error deleteing ALL items: " + err)
   return res.status(400).json({
     status : true,
