@@ -13,7 +13,7 @@ const RemoveCompleted = props => {
     fontFamily: "Balsamiq Sans, cursive"
   };
 
-  const serverCall = item => {
+  const serverCallSingle = item => {
     fetch(
     `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items/${item._id}`  ,
       {
@@ -32,6 +32,29 @@ const RemoveCompleted = props => {
       .catch(err => console.log("Error making server delete item call: ", err));
   };
 
+  const serverCallMultiple = (keep,remove) => {
+    const body =[keep,remove]
+    console.log(keep)
+    console.log("remove " + remove)
+    console.log("body: " + body)
+    fetch(
+    `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items`  ,
+      {
+        method: "DELETE",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(body)
+      }
+    )
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.log("Error making server delete item call: ", err));
+  }
+
   const remove = async () => {
     let allItems = [...props.items]
     let itemsToRemove = []
@@ -42,11 +65,14 @@ const RemoveCompleted = props => {
         else
         itemsKept.push(item)
     });
-    if (itemsToRemove.length > 0) {
-      let removePromises = await itemsToRemove.map(item => serverCall(item));
-      let resolved = await Promise.all(removePromises);
-      props.updateitemsAfterDelete(itemsKept)
+    if (itemsToRemove.length == 1) {
+      await serverCallSingle(itemsToRemove[0])
     }
+    else if(itemsToRemove.length > 1)
+    {
+      await serverCallMultiple(itemsKept, itemsToRemove)
+    }
+    props.updateitemsAfterDelete(itemsKept)
   };
 
   return (
