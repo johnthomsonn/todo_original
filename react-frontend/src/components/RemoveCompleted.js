@@ -14,7 +14,6 @@ const RemoveCompleted = props => {
   };
 
   const serverCall = item => {
-    console.log(props.match.params.list)
     fetch(
     `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items/${item._id}`  ,
       {
@@ -34,7 +33,7 @@ const RemoveCompleted = props => {
   };
 
   const remove = async () => {
-    let allItems = props.items
+    let allItems = [...props.items]
     let itemsToRemove = []
     let itemsKept = []
     allItems.filter(item => {

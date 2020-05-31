@@ -13,6 +13,8 @@ const ListPage = props => {
     fetchList();
   }, []);
 
+  //useEffect( () => listTodos(), [items])
+
   const addItem = item => {
     setItems([...items, item]);
   };
@@ -48,10 +50,27 @@ const ListPage = props => {
       return item;
     });
     setItems(newItems);
+
   };
 
+  // items were not updating properly with just setitems(items)
+  // fixed with setting empty array first but must be better solution.
   const updateItemsAfterDelete = items => {
+    setItems([])
     setItems(items)
+  }
+
+  const listTodos = () => {
+    return items.map((item, index) => (
+      <TodoItem
+        content={items[index].content}
+        key={index}
+        id={items[index]._id}
+        {...props}
+        completed={items[index].completed}
+        updateTodo={updateTodo}
+      />
+    ))
   }
 
   return (
@@ -76,16 +95,7 @@ const ListPage = props => {
 
       <div className="list-page-bottom  ">
         {items !== undefined &&
-          items.map((item, index) => (
-            <TodoItem
-              content={items[index].content}
-              key={index}
-              id={items[index]._id}
-              {...props}
-              completed={items[index].completed}
-              updateTodo={updateTodo}
-            />
-          ))}
+          listTodos()}
       </div>
     </>
   );
