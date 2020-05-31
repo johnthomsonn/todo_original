@@ -59,7 +59,6 @@ const TodoItem = props => {
         ...item,
         completed: data.item.completed
       });
-      console.log("returned data for completion " ,data.item.completed)
       props.updateTodo(item)
     }
     else
