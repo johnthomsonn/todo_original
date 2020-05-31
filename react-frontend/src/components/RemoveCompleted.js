@@ -34,9 +34,6 @@ const RemoveCompleted = props => {
 
   const serverCallMultiple = (keep,remove) => {
     const body =[keep,remove]
-    console.log(keep)
-    console.log("remove " + remove)
-    console.log("body: " + body)
     fetch(
     `${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}/items`  ,
       {
