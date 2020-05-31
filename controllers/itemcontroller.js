@@ -1,12 +1,14 @@
 const express = require("express");
 const Item = require("../models/itemmodel");
 const List = require("../models/listmodel");
-const {error, debug, yellow} = require("../utils/debug");
+const {error,  yellow} = require("../utils/debug");
+const debug = require('debug')('itemcontroller')
 
 exports.getItemById = async (req, res, next, id) => {
   const item = await Item.findById(id);
   if (item) {
     req.item = item;
+    debug("Item attached to req: " + item)
   } else {
     res.status(400).json({
       status: true,
@@ -50,43 +52,71 @@ exports.addItemToList = async (req, res) => {
   }
 };
 
-exports.deleteItem = (req, res) => {
-let listToUpdate = req.list;
-
-  let updatedListitems = listToUpdate.items.filter(item => item._id.toString() !== req.item._id.toString())
-  listToUpdate.items = updatedListitems
-  listToUpdate.save( (err, list) => {
-    if(err)
-    {
-      error("error saving updated list: " + err)
-      return res.status(400).json({
-        status: true,
-        error : err
-      })
-    }
-    else
-    {
-      //item reference has been removed form list so remove item
-      req.item.remove((err, item) => {
-        if (err) {
-          res.status(400).json({
-            status: true,
-            error: "Could not delete item " + req.item
-          });
-        } else {
-          return res.json({
-            status: true,
-            message: `item (${item.content}) deleted`,
-            list : listToUpdate
-          });
-        }
-      });
-    }
+exports.deleteItems = async (req, res) => {
+  let listToUpdate = req.list;
+ let [keeping, deleting] = req.body;
+try {
+  const removePromises = await deleting.map(async item => {
+    const foundItem = await Item.findById(item._id)
+    return foundItem.remove()
   })
+  //const removeResults = await Promise.all(removePromises)
+  listToUpdate.items = keeping;
+  const updated = await listToUpdate.save()
+  if(updated)
+  {
+    return res.json({
+      status : true,
+      message: `item (${item.content}) deleted`,
+      list: updated
+    })
+  }
+  else
+  {
+    error("Error deleteing ALL items but not caught error: " + err)
+    return res.status(400).json({
+      status : true,
+      error : "error deleting all items: " + err
+    })
+  }
 
-
-
+}
+catch(err) {
+  error("Error deleteing ALL items: " + err)
+  return res.status(400).json({
+    status : true,
+    error : "error deleting all items: " + err
+  })
+}
 };
+
+exports.deleteItem = async (req,res) => {
+  let listToUpdate = req.list
+  let updatedListItems = listToUpdate.items.filter(item => item._id.toString() !== req.item._id.toString())
+  listToUpdate.items = updatedListItems
+  try
+  {
+    //updatedList = await listToUpdate.save()
+    let l =await listToUpdate.save()
+
+    if(l) {
+      let item = await req.item.remove()
+
+    return res.json({
+      status : true,
+      message: `item (${item.content}) deleted`,
+      list: l
+    })
+  }
+  }
+  catch(err)  {
+    error("Error in delete item: " + err)
+    return res.status(400).json({
+      status : true,
+      error : "Error in deleting an item: " + err
+    })
+  }
+}
 
 exports.completeItem = (req, res) => {
   let item = req.item;
