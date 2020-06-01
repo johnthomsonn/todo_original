@@ -6,7 +6,7 @@ routes/testroute.js
 validation/testvalidation.js
 *.scss
 *.css.map
-
+Procfile
 
 react-frontend/node_modules/
 
