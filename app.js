@@ -16,7 +16,6 @@ const authroute = require('./routes/authroute');
 const userroute = require('./routes/userroute');
 const listroute = require('./routes/listroute');
 const itemroute = require('./routes/itemroute');
-const testroute = require('./routes/testroute');
 
 // Includes to help with Routes
 const {getUserByUsernameParam} = require('./controllers/usercontroller')
@@ -47,7 +46,6 @@ mongoose.connection.on('error', err => {
 
 
 //get urls and route
-app.use("/test", testroute);
 app.get("/", (req,res) => res.send("Home Page"));
 app.use("/auth",  authroute );
 app.use("/users", needAuthentication, userroute );
