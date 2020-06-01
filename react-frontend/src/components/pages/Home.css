@@ -2,6 +2,10 @@
   font-family: "Balsamiq Sans", cursive;
 }
 
+.db-info {
+  border: 1px solid lightblue;
+}
+
 #header {
   margin-left: 5%;
   background-color: inherit;

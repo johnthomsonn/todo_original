@@ -39,6 +39,12 @@ const setRedirectErrorFromURL = () => {
 
   return (
     <>
+    <div className="db-info alert alert-info">
+      The database is hosted on MongoDb Atlas free tier which is not optimised for production builds, therefore some actions may take a few seconds to complete
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
       <NavBar history={props.history} />
       <div className="alert alert-danger" style={{display : (error.length) ? "" : "none", fontWeight :"bold", border: "2px solid darkred", textAlign:"center"}}>
         {error}
