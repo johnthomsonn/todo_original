@@ -1,5 +1,5 @@
 # todo
-Todo list created with Node js and React. This project has all intended functionality, only optimisations/refactoring to do. It allows users to create a profile and then create multiple todo lists.
+Todo list created with Node js and React. This project has all intended functionality, only optimisations/refactoring to do. It allows users to create a profile and then create multiple todo lists. Development build can be started using ```npm run dev``` this will satrt the express serve ron port 5000 and Reatc on port 3000.
 
 ## API endpoints
 
