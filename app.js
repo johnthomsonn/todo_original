@@ -34,7 +34,7 @@ app.use(cors({
 app.options('*', cors())
 
 // Database connection tried
-mongoose.connect(process.env.DB_CLUSTER_STRING, {
+mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology : true
   })
