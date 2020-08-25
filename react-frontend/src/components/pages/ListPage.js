@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from 'react-router-dom'
 import CreateTodo from "../main/CreateTodo";
 import NavBar from "../main/NavBar/NavBar";
 import "./ListPage.css";
@@ -9,6 +10,7 @@ const ListPage = props => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState("");
   const [listName, setListName] = useState("");
+  const [redirectToProfile, setRedirectToProfile] = useState(false);
 
   useEffect(() => {
     fetchList();
@@ -76,6 +78,29 @@ const ListPage = props => {
     ))
   }
 
+  const deleteList = () => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/users/${props.match.params.username}/lists/${props.match.params.list}`, {
+      method: "DELETE",
+      mode: "cors",
+      credentials: "include",
+      headers: {
+        Accept: "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error)
+        }
+        else {
+          setRedirectToProfile(true);
+        }
+      })
+  }
+
+  if (redirectToProfile) {
+    return <Redirect to={`/${props.match.params.username}`} />
+  }
   return (
     <>
       <NavBar history={props.history} />
@@ -88,11 +113,13 @@ const ListPage = props => {
 
       <div className="list-page-top">
 
-        <div className="list-name">
+        <div className="list-name" >
           <h3>{listName}</h3>
         </div>
 
         <CreateTodo {...props} addItem={addItem} />
+
+        <button onClick={deleteList}>Delete List</button>
 
         <div className="remove-completed">
           <RemoveCompleted {...props} items={items} updateitemsAfterDelete={updateItemsAfterDelete} />
